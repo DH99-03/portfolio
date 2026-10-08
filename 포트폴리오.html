@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>권동현 · Portfolio</title>
+  <meta name="description" content="모르면 배워서, 끝까지. 센서에서 AI, 그리고 제조 현장까지 — 권동현 포트폴리오" />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a class="skip" href="#main">본문으로 건너뛰기</a>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+
+  <header class="nav" id="nav">
+    <div class="nav__inner">
+      <a class="nav__brand" href="#top">권동현</a>
+      <nav class="nav__links" id="nav-links" aria-label="섹션 이동">
+        <a href="#projects">프로젝트</a>
+        <a href="#scenes">끝까지</a>
+        <a href="#story">스토리</a>
+        <a href="#awards">수상·자격</a>
+        <a href="#contact">연락처</a>
+      </nav>
+      <button class="nav__print" type="button" onclick="window.print()" title="이력서 형태로 인쇄/PDF 저장">PDF</button>
+      <button class="nav__toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="메뉴 열기">
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero" id="top">
+      <div class="hero__text">
+        <div class="roles" id="roles" role="group" aria-label="읽는 관점 선택"></div>
+        <p class="eyebrow mono" id="hero-name"></p>
+        <h1 class="hero__headline" id="hero-headline"></h1>
+        <p class="hero__sub" id="hero-sub"></p>
+        <p class="hero__intro" id="hero-intro"></p>
+        <ul class="proof" id="hero-proof" hidden></ul>
+        <div class="hero__cta">
+          <a class="btn btn--primary" href="#projects">프로젝트 보기</a>
+          <a class="btn" id="hero-mail" href="#">이메일 보내기</a>
+          <a class="btn" href="권동현_원페이저.pdf" download>원페이저 PDF</a>
+        </div>
+      </div>
+      <figure class="hero__photo">
+        <div class="photo" id="photo"><span class="photo__fallback">DH</span></div>
+      </figure>
+      <ul class="stats" id="stats"></ul>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="section" id="projects">
+      <div class="section__head">
+        <div>
+          <p class="eyebrow mono">01 / Projects</p>
+          <h2>대표 프로젝트</h2>
+        </div>
+        <p class="section__lead">문제 → 접근 → 내 역할 → 결과, 그리고 결과의 한계까지 적었습니다.</p>
+      </div>
+      <div class="featured" id="featured"></div>
+
+      <h3 class="subhead">그 외 프로젝트</h3>
+      <ul class="others" id="others"></ul>
+    </section>
+
+    <!-- SCENES -->
+    <section class="section" id="scenes">
+      <div class="section__head">
+        <div>
+          <p class="eyebrow mono">02 / Pattern</p>
+          <h2>끝까지 해낸 장면들</h2>
+        </div>
+        <p class="section__lead">시기도 분야도 다르지만 같은 순서가 반복됩니다. <b>모르는 것이 생기면 → 배워서 → 끝낸다.</b></p>
+      </div>
+      <div class="scenes" id="scene-list"></div>
+    </section>
+
+    <!-- STORY -->
+    <section class="section" id="story">
+      <div class="section__head">
+        <div>
+          <p class="eyebrow mono">03 / Story</p>
+          <h2>센서에서 AI, 그리고 제조 현장까지</h2>
+        </div>
+        <p class="section__lead">물리 신호가 데이터가 되고, 데이터가 서비스가 되고, 서비스가 현장의 판단이 되는 흐름을 따라 성장해 왔습니다.</p>
+      </div>
+      <ol class="timeline" id="timeline"></ol>
+    </section>
+
+    <!-- AWARDS / CERTS / SKILLS -->
+    <section class="section" id="awards">
+      <div class="section__head">
+        <div>
+          <p class="eyebrow mono">04 / Record</p>
+          <h2>수상 · 자격 · 기술</h2>
+        </div>
+      </div>
+      <div class="record">
+        <div class="record__col">
+          <h3 class="subhead">수상</h3>
+          <ul class="awards" id="award-list"></ul>
+        </div>
+        <div class="record__col">
+          <h3 class="subhead">자격 · 어학</h3>
+          <ul class="certs" id="cert-list"></ul>
+          <h3 class="subhead">기술</h3>
+          <div class="skills" id="skill-list"></div>
+        </div>
+      </div>
+      <h3 class="subhead">사람을 묶어 본 경험</h3>
+      <ul class="activities" id="activity-list"></ul>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section contact" id="contact">
+      <div>
+        <p class="eyebrow mono">05 / Contact</p>
+        <h2 class="contact__title">처음인 일도,<br />끝까지 해내겠습니다.</h2>
+      </div>
+      <div class="contact__links">
+        <a class="btn btn--primary" id="contact-mail" href="#"></a>
+        <a class="btn" id="contact-gh" href="#" target="_blank" rel="noopener">GitHub ↗</a>
+        <a class="btn" href="권동현_원페이저.pdf" download>원페이저 PDF</a>
+        <a class="btn" href="권동현_포트폴리오_9p.pdf" download>포트폴리오 PDF (9쪽)</a>
+        <a class="btn" href="포트폴리오_화면집.html">화면 모음 (크게 보기)</a>
+        <a class="btn" href="권동현_화면집.pdf" download>화면집 PDF</a>
+        <p class="contact__avail" id="avail" hidden></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span id="footer-name"></span> · 2026 · built with HTML/CSS/JS
+  </footer>
+
+  <dialog class="lightbox" id="lightbox" aria-label="이미지 크게 보기">
+    <button class="lightbox__close" type="button" aria-label="닫기">×</button>
+    <button class="lightbox__nav lightbox__nav--prev" type="button" aria-label="이전">‹</button>
+    <figure><img id="lb-img" alt="" /><figcaption id="lb-cap"></figcaption></figure>
+    <button class="lightbox__nav lightbox__nav--next" type="button" aria-label="다음">›</button>
+  </dialog>
+
+  <dialog class="reader" id="reader" aria-label="프로젝트 이야기">
+    <div class="reader__bar"><span class="reader__title mono" id="rd-title"></span><div class="reader__prog" aria-hidden="true"><i id="rd-prog"></i></div><button class="reader__close" type="button" id="rd-close" aria-label="닫기">닫기 ×</button></div>
+    <div class="reader__scroll" id="rd-scroll"><article class="reader__body" id="rd-body"></article></div>
+  </dialog>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
