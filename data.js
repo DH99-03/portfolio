@@ -311,7 +311,7 @@ window.SITE = {
   ],
 
   certs: [
-    { date: "2025.09", name: "정보처리기사", org: "한국산업인력공단" },
+    { date: "2026.09", name: "정보처리기사", org: "한국산업인력공단" },
     { date: "2025.04", name: "SQLD", org: "한국데이터산업진흥원" },
     { date: "2024.09", name: "ADsP", org: "한국데이터산업진흥원" },
     { date: "2026.03", name: "OPIc IM1", org: "ACTFL" },
