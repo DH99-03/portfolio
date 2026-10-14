@@ -17,8 +17,9 @@
   --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
   --ease: cubic-bezier(.2, .7, .2, 1);
 }
+/* 시스템이 다크면 다크, 단 사용자가 고른 값(data-theme)이 있으면 그 값이 우선 */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme]) {
     --bg: #0f1110;
     --surface: #161918;
     --sunken: #1a1e1c;
@@ -31,6 +32,20 @@
     --on-ink: #0f1110;
   }
 }
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0f1110;
+  --surface: #161918;
+  --sunken: #1a1e1c;
+  --line: #2a2f2c;
+  --text: #eceee9;
+  --muted: #aab0aa;
+  --faint: #8a918b;
+  --accent: #7cc4ad;
+  --accent-soft: rgba(124, 196, 173, .12);
+  --on-ink: #0f1110;
+}
+:root[data-theme="light"] { color-scheme: light; }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; scroll-padding-top: 80px; }
@@ -75,6 +90,15 @@ b { font-weight: 600; color: var(--text); }
   border: 1px solid var(--line); border-radius: 999px; padding: 5px 14px; cursor: pointer; transition: color .2s, border-color .2s;
 }
 .nav__print:hover { color: var(--text); border-color: var(--text); }
+.nav__theme {
+  display: inline-grid; place-items: center; width: 32px; height: 30px; margin-right: -14px; padding: 0;
+  color: var(--muted); background: none; border: 1px solid var(--line); border-radius: 999px; cursor: pointer; transition: color .2s, border-color .2s;
+}
+.nav__theme:hover { color: var(--text); border-color: var(--text); }
+.nav__theme svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.nav__theme .ic-sun { display: none; }
+:root[data-theme="dark"] .nav__theme .ic-moon { display: none; }
+:root[data-theme="dark"] .nav__theme .ic-sun { display: inline; }
 .nav__toggle { display: none; width: 40px; height: 40px; background: none; border: 0; cursor: pointer; position: relative; }
 .nav__toggle span { position: absolute; left: 10px; right: 10px; height: 1.5px; background: var(--text); transition: transform .3s var(--ease), top .3s var(--ease); }
 .nav__toggle span:nth-child(1) { top: 16px; }
@@ -311,7 +335,7 @@ main { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
 }
 @media (max-width: 760px) {
   .nav__toggle { display: block; margin-left: 4px; }
-  .nav__print { margin-left: auto; }
+  .nav__theme { margin-left: auto; }
   .nav__links {
     position: absolute; top: 100%; left: 0; right: 0; margin: 0; flex-direction: column; gap: 0;
     background: var(--bg); border-bottom: 1px solid var(--line); padding: 8px var(--gutter) 16px;
@@ -384,3 +408,12 @@ main { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
 .rd-nums b{display:block;font-size:clamp(22px,3.4vw,32px);letter-spacing:-.03em;line-height:1.15;color:var(--accent)}
 .rd-nums span{font-size:12.5px;color:var(--faint)}
 @media(max-width:600px){.rd-nums li+li{border-left:0;padding-left:0}}
+
+/* 인쇄·PDF 저장은 다크 모드여도 항상 밝은 배경으로 */
+@media print {
+  :root[data-theme="dark"] {
+    color-scheme: light;
+    --bg: #fbfaf7; --surface: #ffffff; --sunken: #f3f1ec; --line: #e4e1da; --text: #15171a; --muted: #565b63;
+    --faint: #6b7078; --accent: #1f5c4d; --accent-soft: #e4efeb; --on-ink: #fbfaf7;
+  }
+}
