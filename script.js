@@ -12,7 +12,6 @@
   $("#hero-headline").innerHTML = `${words.map(esc).join(" ")}${words.length ? " " : ""}<em>${esc(last)}</em>`;
   $("#hero-sub").textContent = S.subline;
   $("#hero-intro").textContent = S.intro;
-  $("#hero-mail").href = `mailto:${S.email}`;
   $("#footer-name").textContent = S.name;
 
   // 사진: 파일이 있으면 표시, 없으면 이니셜 유지
@@ -43,6 +42,11 @@
     )
     .join("");
 
+  // ---------- PDF 경로 ----------
+  const P = S.pdf || { all: { label: "전체", file: "전체" }, projects: [] };
+  const rolePdf = (r, kind) => `pdf/직무별/권동현_${(r || P.all).file}_${kind}.pdf`;
+  const projPdf = (f) => `pdf/프로젝트/권동현_${f}.pdf`;
+
   // ---------- 화면 이미지 갤러리 + 확대 보기 ----------
   const galleries = [];
   const gallery = (shots, name) => {
@@ -64,48 +68,18 @@
         return `<li>${kind ? `<span class="kind ${kind === "직접 구현" ? "kind--do" : ""}">${esc(kind)}</span>` : ""}${esc(x)}</li>`;
       })
       .join("")}</ul>`;
-  const renderFeatured = (order) => {
-    galleries.length = 0;
-    const items = order.map((id) => S.featured.find((p) => p.id === id)).filter(Boolean);
-    $("#featured").innerHTML = items
-      .map(
-        (p, i) => `<article class="project reveal" id="p-${esc(p.id)}">
-        <header class="project__head">
-          <span class="project__index mono">0${i + 1}</span>
-          <div>
-            <p class="project__kicker mono">${esc(p.kicker)}</p>
-            <h3 class="project__name">${esc(p.name)}</h3>
-            <p class="project__one">${esc(p.oneLine)}</p>
-          </div>
-          ${p.award ? `<p class="badge"><span class="mono">Award</span>${esc(p.award)}</p>` : ""}
-        </header>
-
-        <div class="metrics">
-          ${p.metrics
-            .map((m) => `<div class="metric"><span class="metric__v">${esc(m.value)}</span><span class="metric__l">${esc(m.label)}</span></div>`)
-            .join("")}
-        </div>
-
-        ${gallery(p.shots, p.name)}
-
-        <div class="rows">
-          <section class="row"><h4 class="label">문제</h4><div><p>${esc(p.problem)}</p></div></section>
-          <section class="row"><h4 class="label">접근</h4><div>${list(p.approach)}</div></section>
-          <section class="row row--role"><h4 class="label">내 역할</h4><div>${roleList(p)}</div></section>
-        </div>
-
-        <p class="honest"><b>한계</b>${esc(p.honest)}</p>
-
-        <footer class="project__foot">
-          ${S.stories && S.stories[p.id] ? `<button class="storybtn" type="button" data-story="${esc(p.id)}">이야기로 읽기 →</button>` : ""}
-          <div class="chips">${p.stack.map((s) => `<span class="chip">${esc(s)}</span>`).join("")}</div>
-          ${p.link ? `<a class="link" href="${esc(p.link.url)}" target="_blank" rel="noopener">${esc(p.link.label)} ↗</a>` : ""}
-        </footer>
-      </article>`
-      )
+  // 대표 프로젝트: 장면형 (pscenes.js). 직무를 고르면 그 직무의 앞 3개가 장면으로, 나머지는 짧은 목록으로
+  const renderFeatured = (order, full) => {
+    const byId = (id) => S.featured.find((p) => p.id === id);
+    const picks = full ? S.featured : order.map(byId).filter(Boolean);
+    const rest = full ? [] : S.featured.filter((p) => !order.includes(p.id));
+    window.ProjectScenes.render($("#pscenes"), picks, [$("#top"), $("#projects .section__head"), $("#projects-tail"), $("#vibe")]);
+    $("#ps-more-wrap").hidden = !rest.length;
+    $("#ps-more").innerHTML = rest
+      .map((p) => `<li><a href="project.html?id=${esc(p.id)}"><b>${esc(p.name)}</b><p>${esc(p.oneLine)}</p><span class="mono">${esc(p.metrics[0].value)} ${esc(p.metrics[0].label)} →</span></a></li>`)
       .join("");
   };
-  renderFeatured(S.featured.map((p) => p.id));
+  renderFeatured(S.featured.map((p) => p.id), true);
 
   // ---------- OTHERS ----------
   $("#others").innerHTML = S.others
@@ -118,12 +92,44 @@
         <div>
           <p>${esc(o.desc)}</p>
           <p class="other__note">${esc(o.note)}</p>
-          ${o.storyId && S.stories && S.stories[o.storyId] ? `<button class="storybtn" type="button" data-story="${esc(o.storyId)}">이야기로 읽기 →</button>` : ""}
+          ${o.storyId && S.stories && S.stories[o.storyId] ? `<a class="storybtn" href="project.html?id=${esc(o.storyId)}">자세히 보기 →</a>` : ""}
         </div>
         ${o.shots && o.shots.length ? `<details class="other__shots"><summary>화면 보기 (${o.shots.length})</summary>${gallery(o.shots, o.name)}</details>` : ""}
       </li>`
     )
     .join("");
+
+  // ---------- VIBE ----------
+  if (S.vibe) {
+    const V = S.vibe;
+    $("#vibe-thesis").textContent = V.thesis;
+    $("#vibe-pillars").innerHTML = V.pillars
+      .map((p, i) => `<article class="pillar reveal"><span class="mono pillar__no">0${i + 1}</span><h3>${esc(p.name)}</h3><p>${esc(p.desc)}</p><p class="pillar__miss">${esc(p.miss)}</p></article>`)
+      .join("");
+    $("#vibe-flow").innerHTML = V.flow
+      .map((f, i) => `<li class="flow__step reveal"><span class="mono flow__no">${i + 1}</span><b>${esc(f.step)}</b><span class="mono flow__skill">${esc(f.skill)}</span></li>`)
+      .join("");
+    $("#vibe-flownote").textContent = V.flowNote;
+    // 9단계가 스크롤에 따라 하나씩 켜진다
+    const flowEl = $("#vibe-flow");
+    const lightFlow = () => {
+      const r = flowEl.getBoundingClientRect();
+      const k = Math.max(0, Math.min(1, (innerHeight * 0.85 - r.top) / (innerHeight * 0.6)));
+      const n = Math.round(k * V.flow.length);
+      flowEl.querySelectorAll(".flow__step").forEach((s, i) => s.classList.toggle("lit", i < n));
+    };
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) flowEl.querySelectorAll(".flow__step").forEach((s) => s.classList.add("lit"));
+    else { addEventListener("scroll", lightFlow, { passive: true }); lightFlow(); }
+    $("#vibe-tools").innerHTML = V.tools
+      .map((g) => `<div class="skillgroup reveal"><span class="mono skillgroup__name">${esc(g.group)}</span><div class="chips">${g.items.map((i) => `<span class="chip">${esc(i)}</span>`).join("")}</div></div>`)
+      .join("");
+    $("#vibe-lessons").innerHTML = V.lessons
+      .map((l) => `<li class="lesson reveal"><p class="lesson__what">${esc(l.what)}</p><p class="lesson__rule">→ ${esc(l.rule)}</p></li>`)
+      .join("");
+    $("#vibe-human").innerHTML = `<b>사람의 몫</b>${esc(V.human.replace(/^제가 맡는 것: /, ""))}`;
+  } else {
+    const v = $("#vibe"); if (v) v.hidden = true;
+  }
 
   // ---------- SCENES ----------
   $("#scene-list").innerHTML = S.scenes
@@ -199,6 +205,7 @@
   const heroSub = $("#hero-sub");
   const heroIntro = $("#hero-intro");
   const allOrder = S.featured.map((p) => p.id);
+  let currentRole = null;
   const setRole = (id, first) => {
     const r = (S.roles || []).find((x) => x.id === id);
     heroSub.textContent = r ? r.subline : S.subline;
@@ -210,10 +217,27 @@
       proofBox.hidden = true;
     }
     rolesBox.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.role === (r ? r.id : "all"))));
-    if (!first) {
-      renderFeatured(r ? r.order : allOrder);
-      document.querySelectorAll("#featured .reveal").forEach((el) => el.classList.add("is-in"));
-    }
+    renderFeatured(r ? r.order : allOrder, !r);
+    currentRole = r;
+    const op = $("#hero-onepager");
+    op.href = rolePdf(r, "원페이저");
+    op.textContent = r ? `${r.label} 원페이저 PDF` : "원페이저 PDF";
+    const pickIds = (r ? r.order : allOrder).slice(0, 3);
+    $("#picks").innerHTML =
+      `<p class="picks__label mono">${r ? esc(r.label) + " 직무로 먼저 볼 프로젝트" : "먼저 볼 프로젝트"}</p><ol class="picks__list">` +
+      pickIds
+        .map((id) => S.featured.find((p) => p.id === id))
+        .filter(Boolean)
+        .map(
+          (p, i) => `<li><a class="pick" href="#ps-${esc(p.id)}">
+            <span class="pick__no mono">0${i + 1}</span>
+            <span class="pick__name">${esc(p.name)}</span>
+            <span class="pick__one">${esc(p.oneLine)}</span>
+            <span class="pick__meta mono">${esc(p.metrics[0].value)} ${esc(p.metrics[0].label)}${p.facts && p.facts.share ? ` · 기여 ${esc(p.facts.share)}` : ""}</span>
+          </a></li>`
+        )
+        .join("") +
+      `</ol>`;
     try {
       const u = new URL(location.href);
       if (r) u.searchParams.set("role", r.id); else u.searchParams.delete("role");
@@ -222,7 +246,7 @@
   };
   if (S.roles && S.roles.length) {
     rolesBox.innerHTML =
-      `<span class="roles__label mono">읽는 관점</span>` +
+      `<span class="roles__label">어떤 직무로 보시나요?</span>` +
       ROLES.map((r) => `<button type="button" class="rolebtn" data-role="${esc(r.id)}" aria-pressed="false">${esc(r.label)}</button>`).join("");
     rolesBox.addEventListener("click", (e) => {
       const b = e.target.closest("button");
@@ -235,6 +259,38 @@
   } else {
     rolesBox.hidden = true;
   }
+
+  // ---------- PDF 받기 ----------
+  const dl = $("#dl");
+  const roleRows = [...(S.roles || []), null];
+  const renderDl = () => {
+    $("#dl-roles").innerHTML = roleRows
+      .map((r) => {
+        const cur = r ? currentRole && currentRole.id === r.id : !currentRole;
+        return `<li class="dl__row${cur ? " is-current" : ""}">
+          <span class="dl__name">${esc(r ? r.label : "전체 (모든 프로젝트)")}${cur ? ' <span class="mono dl__now">지금 보는 관점</span>' : ""}</span>
+          <a class="dl__file" href="${esc(rolePdf(r, "원페이저"))}" download>원페이저 <span class="mono">1쪽</span></a>
+          <a class="dl__file" href="${esc(rolePdf(r, "포트폴리오"))}" download>포트폴리오 <span class="mono">${r ? "9~10쪽" : "전체"}</span></a>
+        </li>`;
+      })
+      .join("");
+    $("#dl-projects").innerHTML = (P.projects || [])
+      .map((x) => {
+        const f = S.featured.find((p) => p.id === x.id);
+        const o = S.others.find((p) => p.storyId === x.id);
+        const name = (f && f.name) || (o && o.name) || x.file;
+        return `<li><a class="dl__file dl__file--proj" href="${esc(projPdf(x.file))}" download>${esc(name)}</a></li>`;
+      })
+      .join("");
+  };
+  document.addEventListener("click", (e) => {
+    if (e.target.closest("[data-open-dl]")) {
+      renderDl();
+      dl.showModal();
+    }
+  });
+  $("#dl-close").addEventListener("click", () => dl.close());
+  dl.addEventListener("click", (e) => { if (e.target === dl) dl.close(); });
 
   // 연락 가능 시기
   if (S.availability) {

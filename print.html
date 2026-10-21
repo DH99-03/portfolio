@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>권동현 · 포트폴리오 인쇄본</title>
+  <!--
+    PDF를 만드는 인쇄용 페이지입니다. 주소 뒤에 붙이는 값으로 문서를 고릅니다.
+      print.html?doc=onepager&role=data      직무별 원페이저 (role: ai · sw · data · plan · sales, 없으면 전체)
+      print.html?doc=portfolio&role=data     직무별 포트폴리오
+      print.html?doc=project&id=spot         프로젝트 상세
+    브라우저에서 열고 인쇄(Ctrl+P) → 'PDF로 저장', 용지 A4 가로, 여백 없음, 배경 그래픽 켜기.
+  -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="print.css" />
+</head>
+<body>
+  <div id="doc"></div>
+  <script src="data.js"></script>
+  <script src="print.js"></script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+/* 프로젝트 페이지. 색은 그 프로젝트의 장면색(pscenes.js가 토큰을 바꿈), 글꼴·간격은 사이트와 같게 */
+.pp { max-width: var(--max); margin: 0 auto; padding: 120px var(--gutter) 40px; }
+.pp-navlinks { display: flex !important; position: static !important; opacity: 1 !important; visibility: visible !important; transform: none !important; flex-direction: row !important; background: none !important; border: 0 !important; padding: 0 !important; margin-left: auto; }
+.pp-navlinks a { border: 0 !important; padding: 4px 0 !important; font-size: 14px !important; }
+.pp ~ .footer, .pp { position: relative; }
+#nav .nav__theme { margin-right: 0; margin-left: 4px; }
+
+.pp-hero { display: grid; gap: 4px; padding-bottom: 36px; }
+.pp-kicker { font-size: 13px; color: var(--muted); }
+.pp-name { font-size: clamp(40px, 7vw, 84px); font-weight: 800; letter-spacing: -0.04em; line-height: 1.05; margin: 6px 0 10px; text-wrap: balance; }
+.pp-one { font-size: clamp(17px, 2vw, 21px); color: var(--muted); max-width: 36em; }
+.pp-award { display: inline-flex; align-self: start; justify-self: start; gap: 10px; align-items: center; margin-top: 14px; padding: 7px 14px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-size: 14px; font-weight: 600; }
+.pp-award .mono { font-size: 11px; font-weight: 500; opacity: .85; }
+.pp-role { margin-top: 10px; font-size: 15px; display: flex; gap: 10px; flex-wrap: wrap; }
+.pp-role span { color: var(--muted); font-size: 12px; padding-top: 3px; }
+.pp-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+
+.pp-sec { padding-top: 56px; }
+.pp-sec .ps-nums { grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 0; }
+.pp-sec .ps-num:nth-child(even) { padding-left: 16px; }
+.pp-sec .ps-num + .ps-num { padding-left: 16px; border-left: 1px solid var(--line); }
+.pp-honest { margin-top: 28px; }
+.pp-h2 { font-size: 13px; font-weight: 600; color: var(--muted); letter-spacing: 0.04em; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--text); }
+.pp-h2 .mono { color: var(--accent); margin-left: 6px; }
+
+.pp-gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 24px; }
+.pp-gallery figure { display: grid; gap: 10px; min-width: 0; }
+.pp-shot { display: block; width: 100%; padding: 0; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: #fff; cursor: zoom-in; box-shadow: 0 18px 44px -30px rgba(0, 0, 0, .45); transition: transform .3s var(--ease); }
+.pp-shot:hover { transform: translateY(-3px); }
+.pp-shot img { display: block; width: 100%; height: auto; max-height: 520px; object-fit: contain; background: #fff; }
+.pp-gallery figcaption { font-size: 14px; color: var(--muted); display: flex; gap: 10px; }
+.pp-gallery figcaption .mono { color: var(--accent); }
+
+.pp-story { padding-top: 88px; }
+.pp-hook { font-size: clamp(26px, 3.6vw, 42px); font-weight: 700; letter-spacing: -0.025em; line-height: 1.3; margin: 10px 0 24px; max-width: 24em; text-wrap: balance; }
+.pp-hook em { font-style: normal; color: var(--accent); }
+.pp-storynums { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-bottom: 24px; }
+.pp-storynums li { padding: 16px 14px 16px 0; }
+.pp-storynums li + li { padding-left: 16px; border-left: 1px solid var(--line); }
+.pp-storynums b { display: block; font-size: 24px; letter-spacing: -0.02em; }
+.pp-storynums span { font-size: 13px; color: var(--muted); }
+.pp-chapters { display: grid; }
+.pp-ch { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: 8px 40px; padding: 32px 0; border-top: 1px solid var(--line); }
+.pp-ch__label { font-size: 12.5px; color: var(--accent); padding-top: 6px; }
+.pp-ch h3 { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.4; margin-bottom: 10px; max-width: 32em; }
+.pp-ch p { color: var(--muted); max-width: 42em; }
+.pp-ch p + p { margin-top: 10px; }
+.pp-ch__fig { margin-top: 18px; max-width: 720px; }
+
+.pp-pager { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; margin-top: 96px; padding-top: 24px; border-top: 1px solid var(--text); }
+.pp-pager a { display: grid; gap: 2px; padding: 10px 0; }
+.pp-pager a:last-child { text-align: right; }
+.pp-pager .mono { font-size: 12px; color: var(--accent); }
+.pp-pager b { font-size: 17px; }
+.pp-pager a:hover b { color: var(--accent); }
+.pp-pager__home { text-align: center; }
+
+@media (max-width: 760px) {
+  .pp { padding-top: 96px; }
+  .pp-sec .ps-nums, .pp-storynums { grid-template-columns: 1fr 1fr; }
+  .pp-sec .ps-num:nth-child(odd) { padding-left: 0; border-left: 0; }
+  .pp-storynums li:nth-child(odd) { padding-left: 0; border-left: 0; }
+  .pp-gallery { grid-template-columns: 1fr; }
+  .pp-ch { grid-template-columns: 1fr; }
+  .pp-pager { grid-template-columns: 1fr 1fr; }
+  .pp-pager__home { display: none !important; }
+}

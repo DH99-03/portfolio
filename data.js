@@ -16,42 +16,104 @@ window.SITE = {
   github: "https://github.com/DH99-03",
 
 
-  // 읽는 관점 전환 (첫 화면 버튼). id는 featured의 id와 짝이 맞는 순서를 order에 적습니다.
+  // 직무별 관점 (첫 화면 버튼). order = 그 직무에서 앞에 보일 대표 프로젝트 3개. file = PDF 파일 이름에 들어가는 말.
   roles: [
     {
-      id: "data", label: "데이터",
+      id: "ai", label: "AI·AX 개발", file: "AI서비스개발",
+      subline: "모델을 현장의 판단과 서비스로, 끝까지 연결하는 사람.",
+      intro: "설비 데이터로 점검 순서를 정하는 예지보전 대시보드를 만들고, YOLO 인식과 LoRA로 미세조정한 LLM을 RAG로 엮어 AWS에 배포했습니다. 최근에는 Claude API로 영업 메모의 빠진 항목을 짚는 기능을 붙여 Vercel에 올렸습니다. 모델 점수보다 그 결과를 사람이 어떻게 쓰는지를 먼저 설계합니다.",
+      proof: [
+        "LS ROKETS: 물리 피처 3개 추가로 RF F1 0.636 → 0.857, 최종 F1 89.1% (합성 데이터)",
+        "Spot!: YOLO11x mAP50 0.903 · Llama3 8B LoRA + RAG · Docker로 AWS 배포",
+        "미팅 전 질문 가이드: Claude API 메모 점검, 근거 문장이 없으면 '미확인'으로 남김",
+      ],
+      order: ["rokets", "spot", "salesguide"],
+    },
+    {
+      id: "sw", label: "SW 개발·IT 운영", file: "SW개발_IT운영",
+      subline: "만들고, 시험하고, 배포까지 확인하는 사람.",
+      intro: "Next.js와 TypeScript로 웹앱을 만들어 SQLite에서 Supabase(Postgres)로 옮기고 Vercel에 배포했습니다. 단위·계약·API 시험을 단계마다 돌렸고, 느린 응답은 측정으로 원인을 찾아 서버 함수 지역을 옮겨 해결했습니다. 지금은 Flutter와 Appwrite로 안드로이드 앱을 계층 구조에 맞춰 만들고 있습니다.",
+      proof: [
+        "미팅 전 질문 가이드: API 시험 141개 · 저장소 계약 시험 · 남용 방지 상한 · Vercel 배포",
+        "서버 함수 지역을 DB와 맞춰 응답 0.7초 → 0.4초 (측정 후 수정)",
+        "Spot!: FastAPI · MySQL · WebSocket 백엔드를 Docker 이미지로 AWS 배포",
+      ],
+      order: ["salesguide", "nextaction", "spot"],
+    },
+    {
+      id: "data", label: "데이터 분석", file: "데이터분석",
       subline: "데이터가 믿을 수 있는지부터 확인하는 사람.",
       intro: "공공 API의 월요일 영업시간이 1,701행 전부 비어 있는 것을 전수 점검으로 찾아냈고, 원본값과 추정값을 구분해 보완하는 규칙을 설계했습니다. 검증 테스트와 함께 팀원에게 재현 가능한 데이터로 인계했고, 매장 재고 불일치도 데이터 흐름을 추적해 풀었습니다.",
       proof: [
-        "부산 공공데이터 공모전: API null 전수 발견 · 349,376쌍 보행 경로 · 테스트 38개로 인계",
-        "재고 오류 90% 이상 감소 (ERP 교체 후 전 매장 전수 재고조사 이후 발생분 기준)",
+        "부산 심야약국: API 결측 전수 발견 · 보행 경로 349,376쌍 · 단위검사 38개 · 결과 파일 14개 재현",
+        "LS ROKETS: 학습·보정·시험 구간을 나눠 고장 유형별 임계값 선정, 과적합 가능성까지 기록",
         "SQLD · ADsP · 정보처리기사",
       ],
-      order: ["rokets", "spot"],
+      order: ["busan", "rokets", "spot"],
     },
     {
-      id: "ai", label: "AI·ML",
-      subline: "모델을 서비스로, 끝까지 연결하는 사람.",
-      intro: "YOLO11x 전이학습으로 제품을 인식하고, 한국어 Llama3 8B를 LoRA로 미세조정해 ChromaDB RAG와 연결했습니다. 모델과 백엔드를 Docker 이미지로 만들어 AWS에 직접 배포했고, LG DX SCHOOL 최종 프로젝트에서 우수상을 받았습니다.",
+      id: "plan", label: "서비스 기획·DX", file: "서비스기획_DX",
+      subline: "현장의 문제를 업무 흐름과 화면 요구사항으로 바꾸는 사람.",
+      intro: "문제 정의부터 IA, 사용자 여정, PRD, ERD, Spec까지 문서를 먼저 쓰고 단계마다 승인하며 서비스를 만들었습니다. 설비 경보를 '무엇부터 확인할지'로 바꾸는 현장·사무실 화면 흐름을 설계했고, 매장에서는 RFID 도입을 제안해 재고 오류를 90% 이상 줄였습니다.",
       proof: [
-        "Spot!: mAP50 0.903 · Precision 0.877 · Recall 0.844",
-        "LLM 파인튜닝 전담 · 모델과 백엔드를 Docker로 묶어 AWS 배포",
-        "프로젝트 수상 4건 (최우수상 3 · 우수상 1)",
+        "미팅 전 질문 가이드: 5 Whys로 원인 정의 → 요구사항 · 수락 기준 → 배포까지 1인 진행",
+        "다음 할 일 앱: 기능 요구사항 21개 · 사용자 여정 3개 · 결정 기록 4건",
+        "매장 RFID 도입 제안과 본사 협의로 재고 오류 90% 이상 감소",
       ],
-      order: ["spot", "rokets"],
+      order: ["salesguide", "nextaction", "rokets"],
     },
     {
-      id: "mfg", label: "제조 DX",
-      subline: "설비 데이터를 현장의 점검 순서로 바꾸는 사람.",
-      intro: "LS JUMP-UP에서 설비 데이터 분석, 예지보전 모델, 점검 대시보드를 만들고 있습니다. 경보를 '무엇부터 확인할지'로 바꾸는 현장 점검·사무실 관제 화면 흐름을 설계했고, 의류 매장에서는 RFID 도입으로 재고 오류를 줄이며 현장 데이터 정합성을 경험했습니다.",
+      id: "sales", label: "IT 기술영업", file: "IT기술영업",
+      subline: "고객의 문제를 듣고, 기술의 기능과 한계를 함께 설명하는 사람.",
+      intro: "영업(AE)이 기술영업(SE)에게 넘기는 요청에서 필수 정보가 빠지는 문제를 정의하고, 미팅 전에 물어볼 질문과 'SE에게 왜 필요한가'를 보여 주는 웹앱을 만들어 배포했습니다. 매장 운영에서는 재고 불일치를 추적해 RFID 도입을 본사와 협의했고, 고객 설문 66명을 분석해 서비스를 기획했습니다.",
       proof: [
-        "LS ROKETS: 정밀도 100% · 재현율 80.4% · F1 89.1% (합성 데이터, 현재 상태 분류)",
-        "현장 점검 / 사무실 관제 화면 흐름 설계",
-        "RFID 도입으로 재고 오류 90% 이상 감소",
+        "미팅 전 질문 가이드: 딜 유형별 질문 은행 · '물었지만 모름' 구분 · 고객용/내부용 보고서",
+        "매장 RFID 도입 제안과 본사 협의로 재고 오류 90% 이상 감소",
+        "Spot!: 커뮤니티·영상 크롤링과 설문 66명으로 고객 불편 정의",
       ],
-      order: ["rokets", "spot"],
+      order: ["salesguide", "spot", "rokets"],
     },
   ],
+
+
+  // 프로젝트 장면색. featured의 palette 값과 짝. 홈의 프로젝트 장면과 프로젝트 페이지 배경에 쓰입니다.
+  // light = 밝은 모드에서, dark = 어두운 모드에서 (어두운 장면은 두 모드에서 같은 색)
+  palettes: {
+    paper: { // 미팅 전 질문 가이드: 요청서 종이
+      light: { bg: "#f5f4ef", surface: "#ffffff", sunken: "#ebe9e2", line: "#dcd9cf", text: "#1b1d22", muted: "#535962", faint: "#686e77", accent: "#2b4fd1", "accent-soft": "#e2e7fa", "on-ink": "#ffffff", ok: "#1f7a5c", cond: "#a3620c" },
+      dark: { bg: "#11141c", surface: "#181c26", sunken: "#1c2130", line: "#2a3042", text: "#e9ecf3", muted: "#a5acbd", faint: "#8b93a6", accent: "#8ea6ff", "accent-soft": "rgba(142,166,255,.14)", "on-ink": "#11141c", ok: "#72d3ab", cond: "#f2bb6a" },
+    },
+    control: { // LS ROKETS: 설비 관제실, 경보 호박색
+      light: { bg: "#131c1e", surface: "#1c2729", sunken: "#1f2c2e", line: "#2a3b3d", text: "#e7eeec", muted: "#9db0ac", faint: "#879b97", accent: "#f2b84b", "accent-soft": "rgba(242,184,75,.14)", "on-ink": "#131c1e", ok: "#6fd0a8", cond: "#ffbf73" },
+    },
+    home: { // Spot!: 집 안 가전, 앱의 분홍 화면
+      light: { bg: "#f6eeec", surface: "#fffaf9", sunken: "#efe2df", line: "#e3d1cd", text: "#2b1f21", muted: "#6b585b", faint: "#7e6a6d", accent: "#b2243f", "accent-soft": "#f6dde2", "on-ink": "#ffffff", ok: "#1f7a5c", cond: "#a3620c" },
+      dark: { bg: "#1b1315", surface: "#24191c", sunken: "#2a1e21", line: "#3a2a2e", text: "#f2e9ea", muted: "#bfaaae", faint: "#a28f93", accent: "#f28aa0", "accent-soft": "rgba(242,138,160,.14)", "on-ink": "#1b1315", ok: "#72d3ab", cond: "#f2bb6a" },
+    },
+    night: { // 부산 심야약국: 밤 10시의 도시, 약국 불빛
+      light: { bg: "#0b1430", surface: "#121d40", sunken: "#14214a", line: "#24315c", text: "#eef1fa", muted: "#a5aecb", faint: "#8e98b8", accent: "#ffd06b", "accent-soft": "rgba(255,208,107,.14)", "on-ink": "#0b1430", ok: "#7fe0b8", cond: "#ffb38a" },
+    },
+    check: { // 다음 할 일 앱: 체크리스트
+      light: { bg: "#eef3ec", surface: "#fbfdfa", sunken: "#e2eadf", line: "#d2ddce", text: "#18211a", muted: "#4f5d52", faint: "#657367", accent: "#2f6f3e", "accent-soft": "#dcebdc", "on-ink": "#ffffff", ok: "#1f7a5c", cond: "#a3620c" },
+      dark: { bg: "#0f1812", surface: "#16211a", sunken: "#1a271e", line: "#28382c", text: "#e8f0e9", muted: "#a6b7a9", faint: "#8b9d8e", accent: "#8fd39b", "accent-soft": "rgba(143,211,155,.14)", "on-ink": "#0f1812", ok: "#72d3ab", cond: "#f2bb6a" },
+    },
+  },
+
+  // PDF 파일 (pdf/ 폴더). 직무별 파일 이름은 roles의 file 값으로 만들어집니다.
+  //   pdf/직무별/권동현_<file>_원페이저.pdf · pdf/직무별/권동현_<file>_포트폴리오.pdf
+  //   pdf/프로젝트/권동현_<프로젝트 file>.pdf
+  pdf: {
+    all: { label: "전체", file: "전체" },
+    projects: [
+      { id: "salesguide", file: "미팅전질문가이드" },
+      { id: "rokets", file: "LS_ROKETS" },
+      { id: "spot", file: "Spot" },
+      { id: "busan", file: "부산심야약국" },
+      { id: "nextaction", file: "다음할일앱" },
+      { id: "cronews", file: "크로뉴스" },
+      { id: "modii", file: "모디" },
+    ],
+  },
 
   // 연락 가능 시기 (비워 두면 표시되지 않습니다. 예: "즉시 출근 가능" 또는 "2026년 12월부터 가능")
   availability: "",
@@ -61,6 +123,7 @@ window.SITE = {
     { value: "4", label: "프로젝트 수상", note: "최우수상 3 · 우수상 1" },
     { value: "3", label: "부트캠프·교육과정", note: "천안시 · LG DX · LS" },
     { value: "4", label: "자격·어학", note: "정보처리기사 · SQLD · ADsP · OPIc" },
+    { value: "2", label: "1인 풀사이클 개발", note: "웹앱 배포 완료 · 앱 개발 중" },
   ],
 
   // "끝까지 해낸 장면들" — 같은 패턴이 반복되는 4개의 장면
@@ -94,7 +157,49 @@ window.SITE = {
       learned: "전수 점검으로 원인을 확인하고, 원본값과 추정값을 구분해 보완하는 규칙을 설계",
       done: "검증 테스트와 함께 팀원에게 재현 가능한 데이터로 인계",
     },
+    {
+      year: "2026",
+      where: "웹앱 풀사이클 개발",
+      unknown: "웹 풀스택(Next.js · DB · 배포)을 처음부터 끝까지 혼자 해 본 적 없음",
+      learned: "Claude Code에 규칙과 스킬을 깔고, 문서를 먼저 쓴 뒤 작게 나눠 시험하고 커밋하는 방식을 익힘",
+      done: "이틀 동안 커밋 102개로 Supabase 연동과 Vercel 배포까지 완료",
+    },
   ],
+
+  // "AI와 함께 만드는 법" — 바이브코딩으로 배운 일하는 방식
+  vibe: {
+    thesis: "바이브코딩은 'AI가 알아서 짠다'가 아닙니다. 제가 결정하고, AI가 선택지·초안·시험을 빠르게 만들고, 결정과 근거를 문서로 남겨 다음 세션이 이어받게 하는 일입니다.",
+    pillars: [
+      { name: "하네스", desc: "CLAUDE.md · 규칙 파일 · 스킬을 전역에 한 번 깔아 두고 모든 프로젝트에서 같은 순서로 일합니다.", miss: "없으면 매번 무엇부터 할지 헤맨다" },
+      { name: "문서", desc: "결정(D번호)·근거·계획을 파일로 남깁니다. 세션이 바뀌어도 AI는 문서만 읽고 이어서 구현했습니다.", miss: "없으면 세션이 바뀔 때 전부 잊는다" },
+      { name: "시험 · 확인", desc: "시험이 진짜 잡는지 변이 시험으로 의심하고, 추측 대신 측정합니다. 제가 눌러 본 것만 통과로 적습니다.", miss: "없으면 틀린 것이 '완료'로 보고된다" },
+      { name: "정직", desc: "확인함 / 미확인 / 미결정을 구분합니다. 실기기·스크린리더처럼 못 본 것은 끝까지 '미확인'으로 둡니다.", miss: "없으면 못 본 것이 사실처럼 굳는다" },
+    ],
+    flow: [
+      { step: "문제 정의", skill: "grill-with-docs" },
+      { step: "IA", skill: "information-architecture" },
+      { step: "사용자 여정", skill: "user-journeys" },
+      { step: "PRD", skill: "prd-writer" },
+      { step: "ERD", skill: "erd-writer" },
+      { step: "Intent", skill: "intent-writer" },
+      { step: "Spec · Plan", skill: "spec-plan-writer" },
+      { step: "구현", skill: "ponytail · Plan 모드" },
+      { step: "QA", skill: "qa-sheet" },
+    ],
+    flowNote: "각 문서는 제가 승인한 뒤 다음 단계로 갑니다. 새 기능은 Intent부터, 문서와 코드가 다르면 문서를 먼저 고칩니다.",
+    tools: [
+      { group: "기획 스킬", items: ["grill-with-docs", "domain-modeling", "grilling", "information-architecture", "user-journeys", "prd-writer", "erd-writer", "intent-writer", "spec-plan-writer"] },
+      { group: "구현 · 검증 스킬", items: ["ponytail (가장 작은 변경)", "qa-sheet", "code-review", "security-review", "simplify"] },
+      { group: "연결 · 환경", items: ["Plan 모드", "서브에이전트", "Supabase MCP", "Vercel MCP", "Git 저장점"] },
+    ],
+    lessons: [
+      { what: "스크립트가 오류로 끝났는데 AI가 '커밋했다'고 보고", rule: "종료 코드로 확인한 뒤에만 '됐다'고 말한다" },
+      { what: "느리다고 DB를 서울로 옮길 뻔했지만 진짜 병목은 서버 함수 지역", rule: "고치기 전에 측정한다. 가장 싼 원인부터" },
+      { what: "시험을 돌릴 때마다 운영 DB에 요청서 28건이 남음", rule: "시험은 자기가 만든 데이터를 지운다" },
+      { what: "AI의 '다 됐습니다'를 그대로 믿을 뻔함", rule: "AI의 동의는 증거가 아니다. 무엇을 확인했는지를 본다" },
+    ],
+    human: "제가 맡는 것: 무엇을 만들지의 결정, 계정·비밀번호·대시보드 설정, 푸시·운영 DB·삭제 승인, diff 읽고 Accept, 실기기 확인, 사용자 인터뷰.",
+  },
 
   // 성장 스토리 (타임라인)
   timeline: [
@@ -103,15 +208,51 @@ window.SITE = {
     { period: "2024.06 – 12", title: "LG DX SCHOOL 1기", desc: "크롤링, 텍스트마이닝, 딥러닝, LLM, Flutter, 클라우드까지. 고객 데이터에서 문제를 찾고 서비스로 구현하는 BX·CX·DX 과정에서 프로젝트 3회 모두 수상.", tag: "AI" },
     { period: "2025", title: "현장 운영과 시스템 개선", desc: "매장의 재고 데이터 불일치를 추적하고 RFID 도입을 이끌며, 데이터 정합성이 현장 업무를 어떻게 바꾸는지 체감.", tag: "Field" },
     { period: "2026.08 – 11", title: "LS JUMP-UP · 제조 디지털 트윈", desc: "설비 데이터 분석, 예지보전 모델, 대시보드. 분석 결과가 현장의 점검 순서와 기록으로 이어지게 만드는 법을 배우는 중.", tag: "Manufacturing" },
+    { period: "2026.10 –", title: "Claude Code · 바이브코딩", desc: "하네스(규칙·스킬)와 문서 중심으로 AI와 일하는 법을 익힘. 웹앱 하나를 문제 정의부터 배포까지 끝내고, 같은 방식으로 Flutter 앱을 만드는 중.", tag: "AI Dev" },
   ],
 
-  // 대표 프로젝트 2개
+  // 대표 프로젝트. metrics의 basis = 숫자의 측정 기준, state = "ok"(확인함) / "cond"(조건·가정이 붙음)
   featured: [
     {
+      id: "salesguide",
+      palette: "paper",
+      facts: { period: "2026.10", team: "1인", share: "100%", role: "기획 · 설계 · 검수 (구현은 Claude Code)" },
+      shots: [{"src": "assets/shots/salesguide-1.jpg", "caption": "요청서 목록 — 진행률과 함께 '내용 확인 · 모름' 개수를 따로 보여 줍니다"}, {"src": "assets/shots/salesguide-2.jpg", "caption": "미팅 전 질문 가이드 — 질문과 'SE에게 왜 필요한가'를 함께, 못 얻은 답은 '물었지만 모름'으로"}, {"src": "assets/shots/salesguide-3.jpg", "caption": "요청서 상세 — SE가 다시 확인할 것을 맨 위에 모음"}, {"src": "assets/shots/salesguide-4.jpg", "caption": "보고서 PDF — 고객용·내부용 미리보기"}],
+      name: "미팅 전 질문 가이드",
+      kicker: "웹앱 풀사이클 개발 · 배포 완료",
+      oneLine: "영업(AE)이 기술영업(SE)에게 넘기는 요청에서 빠지는 정보를, 미팅 전에 먼저 보이게 하는 요청서 웹앱",
+      problem:
+        "IT B2B에서는 SE가 필요한 정보의 기준이 AE와 합의되어 있지 않아, 넘어오는 요청에 필수 정보가 빠지고 SE가 되묻느라 시간을 씁니다. 5 Whys로 원인을 '완성된 요청의 기준이 없다'로 좁혔습니다(현직자 인터뷰 전 가설).",
+      approach: [
+        "문제 정의 → IA → 사용자 여정 → PRD → ERD → Spec·Plan → 구현 → QA 순서로 문서를 먼저 쓰고, 문서와 코드가 다르면 문서부터 고침",
+        "딜 유형별 질문 은행으로 요청서를 채우고, '미입력'과 '물었지만 모름'을 구분해 SE가 다시 확인할 곳을 보이게 함",
+        "Claude(Haiku) 메모 점검 · 공유 링크 · 파일 가져오기 · 보고서 PDF 추가, 외부 전송 동의와 가명화, 확인 전 AI 채움은 전달 불가",
+        "SQLite로 시작해 저장소 계층을 나눈 뒤 Supabase(Postgres)로 옮기고 Vercel에 배포, 방문자별 분리와 남용 방지 상한",
+      ],
+      roleKind: ["설계·검수", "설계·검수", "조율·협업"],
+      role: [
+        "문제 정의와 모든 결정(D1~D76)을 직접 내리고 근거와 함께 문서로 기록",
+        "Claude Code에 하네스(규칙·스킬)를 깔고 단계별로 구현을 맡긴 뒤, 시험 결과와 화면을 직접 확인해 통과 여부 판단",
+        "계정·DB 비밀번호·대시보드 설정·배포 승인 같은 '사람의 몫'을 맡고, 느린 응답은 측정으로 원인(함수 지역)을 찾아 해결",
+      ],
+      metrics: [
+        { value: "102", label: "커밋 (이틀)", basis: "Git 기록", state: "ok" },
+        { value: "141", label: "API 시험 (공유 링크 단계)", basis: "자동 시험 실행 결과", state: "ok" },
+        { value: "0.7 → 0.4초", label: "서버 응답 (지역 조정 후)", basis: "한 PC에서 5회씩 측정", state: "cond" },
+        { value: "D1–D76", label: "기록한 결정", basis: "개발 계획 문서의 결정 목록", state: "ok" },
+      ],
+      honest:
+        "모든 데이터는 가상이며, 질문 은행이 실제 현장에 맞는지는 현직자 인터뷰 전이라 아직 증명하지 못했습니다. 키보드 전 경로·스크린리더·실기기 확인은 미확인으로 남겨 두었습니다.",
+      stack: ["Next.js 16", "React 19", "TypeScript", "zod", "SQLite", "Supabase", "Vercel", "Claude API", "Claude Code"],
+      live: { label: "서비스 열어 보기", url: "https://sales-service-gamma.vercel.app/" },
+    },
+    {
       id: "rokets",
+      palette: "control",
+      facts: { period: "2026.09", team: "3인", share: "50%", role: "업무 흐름 기획 · 요구사항 · 화면 검수" },
       shots: [{"src": "assets/shots/rokets-1.jpg", "caption": "현장 점검 화면 — 경보가 뜬 설비의 측정값을 카드로 보여줍니다"}, {"src": "assets/shots/rokets-2.jpg", "caption": "사무실 종합 관제 화면 — 점검 검토 대상 목록"}, {"src": "assets/shots/rokets-3.jpg", "caption": "상세 진단 화면"}, {"src": "assets/shots/rokets-4.jpg", "caption": "모델 보고서 화면"}, {"src": "assets/shots/rokets-5.jpg", "caption": "보정 시뮬레이션 — 측정값을 조정해 판정이 어떻게 바뀌는지 확인"}],
       name: "LS ROKETS",
-      kicker: "LS JUMP-UP · 2026.09 · 3인 팀",
+      kicker: "LS JUMP-UP 제조 디지털 트윈 과정",
       oneLine: "설비 경보를 '무엇부터 확인할지'로 바꾸는 예지보전 점검 대시보드",
       problem:
         "경보가 여러 개 뜨면 담당자는 무엇부터 봐야 할지 판단하기 어렵고, 온도·회전속도·토크·공구 사용시간을 숫자로만 보면 복합 조건을 해석하기 힘듭니다.",
@@ -127,10 +268,10 @@ window.SITE = {
         "모델 결과와 표시 기준 검토, 팀 접속·진행 공유 조율",
       ],
       metrics: [
-        { value: "100%", label: "정밀도" },
-        { value: "80.4%", label: "재현율" },
-        { value: "89.1%", label: "F1" },
-        { value: "0.636 → 0.857", label: "피처 추가 후 RF F1" },
+        { value: "100%", label: "정밀도", basis: "합성 데이터 시험 구간", state: "cond" },
+        { value: "80.4%", label: "재현율", basis: "합성 데이터 시험 구간", state: "cond" },
+        { value: "89.1%", label: "F1", basis: "현재 상태 분류 · 미래 예측 아님", state: "cond" },
+        { value: "0.636 → 0.857", label: "피처 추가 후 RF F1", basis: "물리 피처 3개 추가 전후", state: "ok" },
       ],
       honest:
         "합성 데이터의 현재 상태 분류 결과이며 미래 고장 예측은 아닙니다. 학습–시험 F1 차이로 과적합 가능성을 함께 기록했습니다.",
@@ -139,9 +280,11 @@ window.SITE = {
     },
     {
       id: "spot",
+      palette: "home",
+      facts: { period: "2024.10 – 12", team: "6 → 4인", share: "30%", role: "팀장 · LLM 파인튜닝 · DB · 배포" },
       shots: [{"src": "assets/shots/spot-1.jpg", "caption": "가전 인식(객체 탐지) 화면 설계"}, {"src": "assets/shots/spot-2.jpg", "caption": "가전 인식 완료와 질문 화면 설계"}, {"src": "assets/shots/spot-3.jpg", "caption": "챗봇 화면 설계"}, {"src": "assets/shots/spot-4.jpg", "caption": "시스템 구성 — Flutter · FastAPI · MySQL · Docker · AWS"}, {"src": "assets/shots/spot-5.jpg", "caption": "클래스별 인식 성능 (mAP50 0.903)"}],
       name: "Spot!",
-      kicker: "LG DX SCHOOL 최종 프로젝트 · 2024.10 – 12 · 팀장 · 6명 → 4명",
+      kicker: "LG DX SCHOOL 최종 프로젝트",
       oneLine: "모델명을 몰라도 사진 한 장으로 가전을 인식하고, 그 제품에 맞춰 답하는 AI 챗봇 앱",
       award: "지능형 고객경험데이터 분석 서비스 프로젝트 우수상",
       problem:
@@ -159,14 +302,77 @@ window.SITE = {
         "웹 UI/UX 공동 작업",
       ],
       metrics: [
-        { value: "0.903", label: "mAP50" },
-        { value: "0.877", label: "Precision" },
-        { value: "0.844", label: "Recall" },
-        { value: "6 → 4", label: "팀원 수 변화" },
+        { value: "0.903", label: "mAP50", basis: "수집 이미지 검증 세트", state: "cond" },
+        { value: "0.877", label: "Precision", basis: "수집 이미지 검증 세트", state: "cond" },
+        { value: "0.844", label: "Recall", basis: "실사용 촬영 환경은 미검증", state: "cond" },
+        { value: "6 → 4", label: "팀원 수 변화", basis: "프로젝트 기간 중", state: "ok" },
       ],
       honest:
         "인식 성능은 수집 이미지 기준 검증 결과이며, 실제 사용자 촬영 환경은 별도 검증 대상입니다. 앱을 운영하던 서버가 종료되어 현재는 시연할 수 없습니다.",
       stack: ["YOLO11x", "Llama3 + LoRA", "ChromaDB", "FastAPI", "MySQL", "Docker", "AWS", "Flutter"],
+    },
+    {
+      id: "busan",
+      palette: "night",
+      facts: { period: "2026.09", team: "공모전 팀", share: "", role: "데이터 수집 · 정제 · 검증 · 인계" },
+      shots: [{"src": "assets/shots/busan-1.jpg", "caption": "팀 최종 보고서 · 부산 약국 분포와 공공심야약국 위치"}, {"src": "assets/shots/busan-2.jpg", "caption": "팀 최종 보고서 · 분석 흐름 (공급 정리 → 수요 배분 → 도보 계산 → 후보 비교)"}, {"src": "assets/shots/busan-3.jpg", "caption": "팀 최종 보고서 · 7개 요일 × 3개 출발 시각별 15분 도보 접근률"}, {"src": "assets/shots/busan-4.jpg", "caption": "팀 최종 보고서 · 신규 지정 상위 10개 후보의 추가 접근 잠재수요"}],
+      name: "부산 심야약국 접근성",
+      kicker: "2026 부산 공공데이터 공모전 (DX Challenge)",
+      oneLine: "공공심야약국 1곳을 더 지정하면 밤 10시~새벽 1시 도보 15분 접근성이 얼마나 바뀌는지 계산한 분석",
+      problem:
+        "심야에 걸어서 갈 수 있는 약국이 어디에 부족한지, 한 곳을 더 지정한다면 어디가 효과가 큰지 판단할 근거가 필요했습니다. 그런데 공공 API를 그대로 믿을 수 없었습니다. 약국 1,701행의 월요일 영업시간이 전부 비어 있었습니다.",
+      approach: [
+        "약국 API 1,701행 전수 점검: 부산 외 주소 5행 제외, 월요일 결측은 지정약국 19곳만 화~금 공통 시각으로 추정하고 '추정' 표시를 남김",
+        "행정동 코드 변경을 추적해 주소 645행을 복원하고 206개 행정동 대표점에 연결",
+        "OSM 보행망으로 349,376쌍 경로를 계산해 21개 시간 조건(월~일 22·23·00시)에서 후보 1,677곳을 평가",
+        "확실한 접근(하한)과 배제할 수 없는 접근(상한)을 나눠 결과를 범위로 제시",
+      ],
+      roleKind: ["설계·검수", "직접 구현", "조율·협업"],
+      role: [
+        "데이터 담당 — 원본값과 추정값을 구분하는 보완 규칙과 분석 가정을 설계하고 문서화, 첫 접근성 모형(행정동 대표점) 구현",
+        "단위검사 38개와 재현 검증: 별도 폴더에서 결과 파일 14개가 바이트 단위로 일치",
+        "데이터 사전 · 재현 코드 · 예제와 함께 팀원에게 인계하고, 보고서 담당에게 '단정하면 안 되는 결론' 목록 전달",
+      ],
+      metrics: [
+        { value: "1,701", label: "약국 행 전수 점검", basis: "공공 API 원본 전체", state: "ok" },
+        { value: "349,376", label: "보행 경로 쌍", basis: "OSM 보행망 · 4km/h 가정", state: "cond" },
+        { value: "38", label: "단위검사 통과", basis: "자동 검사 실행 결과", state: "ok" },
+        { value: "14 / 14", label: "결과 파일 재현", basis: "별도 폴더 · 바이트 단위 일치", state: "ok" },
+      ],
+      honest:
+        "위 숫자는 제가 만든 행정동 대표점 모형(206곳)의 결과입니다. 팀 최종 보고서는 이 데이터를 받아 100m 격자 모형으로 다시 계산했고, 그래서 후보 순위가 달라졌습니다(해운대 신시가지가 상위). 보행속도 4km/h는 분석 가정이며 현장 실측이 아니고, 수요는 실제 이용자 수가 아닌 생활인구 기반 잠재수요입니다.",
+      stack: ["Python", "pandas", "NumPy", "Shapely", "pyproj", "SciPy", "OpenStreetMap", "공공데이터 API"],
+    },
+    {
+      id: "nextaction",
+      palette: "check",
+      facts: { period: "2026.10 –", team: "1인", share: "100%", role: "기획 · 설계 · 검수 (구현은 Claude Code)" },
+      shots: [{"src": "assets/shots/nextaction-1.jpg", "caption": "첫 화면 디자인 시안 A·B·C 비교 — '지금 할 수 있는 일'을 담당자별로"}, {"src": "assets/shots/nextaction-2.jpg", "caption": "할 일 입력 — 제목 / 담당 / 날짜 한 줄과 선행 할 일 하나"}, {"src": "assets/shots/nextaction-3.jpg", "caption": "다크 모드 시안"}],
+      name: "다음 할 일 앱",
+      kicker: "Claude 앱 개발 · 개발 중",
+      oneLine: "할 일 하나가 끝나면 '다음에 누가 무엇을 할지'가 바로 보이는 팀 프로젝트용 안드로이드 앱",
+      problem:
+        "Spot! 팀장 시절, 바뀐 일정이 카톡과 회의에만 남고 WBS는 중간에 끊겨 후반으로 갈수록 '다음 할 일을 몰라 다시 회의'하는 일이 잦았습니다. 제 경험을 Mom Test 방식(실제로 있었던 일만)으로 다시 묻고 문제를 정의했습니다.",
+      approach: [
+        "기록자 한 명이 '제목 / 담당 / 날짜' 한 줄로 입력하고, 할 일마다 선행 할 일 하나를 연결",
+        "선행이 끝난 일만 '지금 할 수 있는 일'로 담당자별로 보여 주고, ✓ 한 번으로 완료하면 다음 일이 나타남",
+        "팀원은 로그인 없이 읽기 전용 링크로 확인 — Flutter 하나로 앱과 웹을 함께(ADR 4건으로 결정 기록)",
+      ],
+      roleKind: ["설계·검수", "설계·검수", "직접 구현"],
+      role: [
+        "문제 정의 · IA · 사용자 여정 3개 · PRD(FR-01~21) · ERD · Spec/Plan을 단계마다 승인하며 진행",
+        "디자인 시안 3안을 비교해 고르고, 기능마다 QA 시트에 결과와 사람이 확인할 목록을 남김",
+        "한글 경로·에뮬레이터 그래픽·병렬 시험 오류 같은 환경 문제를 재현하고 해결 방법을 CLAUDE.md에 기록",
+      ],
+      metrics: [
+        { value: "21", label: "기능 요구사항 (FR)", basis: "PRD 가설 v1 · 구현 진행 중", state: "cond" },
+        { value: "4", label: "ADR (결정 기록)", basis: "docs/adr 문서", state: "ok" },
+        { value: "3", label: "핵심 사용자 여정", basis: "인터뷰 1건 기반 가설", state: "cond" },
+        { value: "14", label: "시험 파일 (flutter test)", basis: "연속 실행 통과 확인", state: "ok" },
+      ],
+      honest:
+        "개발 진행 중이며 근거 인터뷰는 본인 경험 1건입니다. 진행 중인 AICE 스터디에서 1~2주 써 보고 '다음 할 일을 몰라 다시 회의한 횟수'로 검증할 계획이며, 기준 횟수는 아직 정하지 않았습니다.",
+      stack: ["Flutter", "Dart", "Appwrite", "Android", "Clean Architecture", "Claude Code"],
     },
   ],
 
@@ -299,7 +505,6 @@ window.SITE = {
     { name: "크로뉴스", storyId: "cronews", shots: [{"src": "assets/shots/cronews-1.jpg", "caption": "서비스 소개 화면"}, {"src": "assets/shots/cronews-2.jpg", "caption": "01 · 오늘의 뉴스 기반 퀴즈"}, {"src": "assets/shots/cronews-3.jpg", "caption": "02 · 나에게 딱 맞는 난이도"}, {"src": "assets/shots/cronews-4.jpg", "caption": "03 · 궁금하면 관련 기사로 연결"}, {"src": "assets/shots/cronews-5.jpg", "caption": "서비스 아키텍처"}], when: "2024.11 · 뉴스빅데이터 해커톤", desc: "뉴스 키워드를 가로세로 낱말 퀴즈와 해설로 바꿔 관련 기사로 이어주는 서비스", note: "최우수상(이사장상) · 뉴스 데이터 수집·전처리, 생성형 AI 연동 담당" },
     { name: "모디 MODII", storyId: "modii", shots: [{"src": "assets/shots/modii-1.jpg", "caption": "서비스 개요"}, {"src": "assets/shots/modii-2.jpg", "caption": "서비스 프로토타입 화면"}, {"src": "assets/shots/modii-3.jpg", "caption": "서비스 화면 플로우"}, {"src": "assets/shots/modii-4.jpg", "caption": "ERD 설계서 (DB 설계 담당)"}], when: "2024.08 – 09 · LG DX SCHOOL", desc: "집 안 가전마다 성격을 부여해 대화하는 공감형 AI 가전톡 웹·앱", note: "최우수상 · OpenAI API로 가전별 AI 어시스턴트 구현, DB 설계" },
     { name: "GREEME", when: "2024.07 · LG DX SCHOOL", desc: "알파세대에게 생활 패턴 기반 친환경 솔루션을 제안하는 메타버스 플랫폼 기획", note: "최우수상 · 경쟁 앱 리뷰·뉴스 크롤링과 설문 72명 분석" },
-    { name: "부산 심야약국 접근성", when: "2026.09 · 부산 공공데이터 공모전", desc: "공공심야약국 1곳을 추가하면 도보 15분 접근성이 얼마나 바뀌는지 분석", note: "데이터 담당 · API null 전수 발견, 349,376쌍 보행 경로, 테스트 38개로 인계" },
     { name: "LiDAR 후방 감지 센서", when: "2023 · 졸업작품", desc: "청각장애인이 뒤에서 오는 물체를 진동으로 알 수 있는 웨어러블", note: "아두이노 독학 · 실외 측정에서 LiDAR 난반사 한계까지 확인" },
   ],
 
@@ -322,6 +527,8 @@ window.SITE = {
     { group: "AI & Data", items: ["pandas", "scikit-learn", "YOLO", "LLM 파인튜닝 (LoRA)", "RAG", "텍스트마이닝"] },
     { group: "Backend & Infra", items: ["FastAPI", "Flask", "MySQL", "Oracle", "Docker", "AWS"] },
     { group: "Visualization", items: ["Plotly Dash", "Matplotlib", "Figma"] },
+    { group: "Web & App", items: ["Next.js", "React", "TypeScript", "Flutter", "Supabase", "Appwrite", "Vercel"] },
+    { group: "AI 협업 개발", items: ["Claude Code", "Codex", "CLAUDE.md 하네스", "Agent Skills", "MCP 커넥터", "Git"] },
   ],
 
   activities: [
