@@ -114,9 +114,9 @@
     );
   };
 
-  const shotsGrid = (shots, max) => {
+  const shotsGrid = (shots, max, phone) => {
     const list = (shots || []).slice(0, max || 4);
-    return `<div class="shots shots--${list.length}">${list
+    return `<div class="shots ${phone ? "shots--phone" : `shots--${list.length}`}">${list
       .map((s) => `<figure><div class="frame"><img src="${esc(s.src)}" alt="${esc(s.caption)}" /></div><figcaption>${esc(s.caption)}</figcaption></figure>`)
       .join("")}</div>`;
   };
@@ -126,7 +126,7 @@
       "",
       `<p class="eyebrow">${i != null ? `PROJECT 0${i + 1} · ` : ""}화면</p>
       <h2 class="h-page" style="margin:2px 0 14px">${esc(p.name)}</h2>
-      ${shotsGrid(p.shots, 4)}
+      ${shotsGrid(p.shots, 4, p.phone)}
       ${p.live || p.link ? `<div class="shots-foot"><span></span><span class="live">${esc((p.live || p.link).label)} → ${esc((p.live || p.link).url)}</span></div>` : ""}`,
       ["권동현 · " + roleLabel, docName]
     );

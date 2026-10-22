@@ -66,7 +66,7 @@
   const gallery = shots.length
     ? `<section class="pp-sec">
         <h2 class="pp-h2">화면 <span class="mono">${shots.length}</span></h2>
-        <div class="pp-gallery">${shots
+        <div class="pp-gallery${f && f.phone ? " pp-gallery--phone" : ""}">${shots
           .map((sh, k) => `<figure><button class="pp-shot" type="button" data-src="${esc(sh.src)}" data-cap="${esc(name + " · " + sh.caption)}" aria-label="${esc(sh.caption)} 크게 보기"><img src="${esc(sh.src)}" alt="${esc(name)} · ${esc(sh.caption)}" loading="lazy" /></button><figcaption><span class="mono">0${k + 1}</span>${esc(sh.caption)}</figcaption></figure>`)
           .join("")}</div>
       </section>`

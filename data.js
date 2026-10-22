@@ -57,7 +57,7 @@ window.SITE = {
       intro: "문제 정의부터 IA, 사용자 여정, PRD, ERD, Spec까지 문서를 먼저 쓰고 단계마다 승인하며 서비스를 만들었습니다. 설비 경보를 '무엇부터 확인할지'로 바꾸는 현장·사무실 화면 흐름을 설계했고, 매장에서는 RFID 도입을 제안해 재고 오류를 90% 이상 줄였습니다.",
       proof: [
         "미팅 전 질문 가이드: 5 Whys로 원인 정의 → 요구사항 · 수락 기준 → 배포까지 1인 진행",
-        "다음 할 일 앱: 기능 요구사항 21개 · 사용자 여정 3개 · 결정 기록 4건",
+        "냥비에스(다음 할 일 앱): 기능 요구사항 36개 · 시험 파일 37개 · 색 대비 34개 조합 계산",
         "매장 RFID 도입 제안과 본사 협의로 재고 오류 90% 이상 감소",
       ],
       order: ["salesguide", "nextaction", "rokets"],
@@ -93,9 +93,9 @@ window.SITE = {
     night: { // 부산 심야약국: 밤 10시의 도시, 약국 불빛
       light: { bg: "#0b1430", surface: "#121d40", sunken: "#14214a", line: "#24315c", text: "#eef1fa", muted: "#a5aecb", faint: "#8e98b8", accent: "#ffd06b", "accent-soft": "rgba(255,208,107,.14)", "on-ink": "#0b1430", ok: "#7fe0b8", cond: "#ffb38a" },
     },
-    check: { // 다음 할 일 앱: 체크리스트
-      light: { bg: "#eef3ec", surface: "#fbfdfa", sunken: "#e2eadf", line: "#d2ddce", text: "#18211a", muted: "#4f5d52", faint: "#657367", accent: "#2f6f3e", "accent-soft": "#dcebdc", "on-ink": "#ffffff", ok: "#1f7a5c", cond: "#a3620c" },
-      dark: { bg: "#0f1812", surface: "#16211a", sunken: "#1a271e", line: "#28382c", text: "#e8f0e9", muted: "#a6b7a9", faint: "#8b9d8e", accent: "#8fd39b", "accent-soft": "rgba(143,211,155,.14)", "on-ink": "#0f1812", ok: "#72d3ab", cond: "#f2bb6a" },
+    check: { // 냥비에스: 앱의 파스텔 나이트 (라벤더 바탕 · 짙은 남색 카드 · 라일락 포인트)
+      light: { bg: "#e4e6fd", surface: "#f6f6ff", sunken: "#d8dbfa", line: "#c4c8f2", text: "#1e1f4b", muted: "#4a4c7d", faint: "#5f6190", accent: "#4a48b8", "accent-soft": "#d9d6fb", "on-ink": "#ffffff", ok: "#1f7a5c", cond: "#9a5d0c" },
+      dark: { bg: "#1b1c3f", surface: "#26285a", sunken: "#2e2f5a", line: "#3d3f78", text: "#f1f0ff", muted: "#c9cbf2", faint: "#a9abd8", accent: "#c3b1ff", "accent-soft": "rgba(195,177,255,.16)", "on-ink": "#1b1c3f", ok: "#72d3ab", cond: "#f2bb6a" },
     },
   },
 
@@ -345,34 +345,36 @@ window.SITE = {
     },
     {
       id: "nextaction",
+      phone: true, // 화면이 세로(휴대폰)라 한 줄에 나란히 보여 줌
       palette: "check",
       facts: { period: "2026.10 –", team: "1인", share: "100%", role: "기획 · 설계 · 검수 (구현은 Claude Code)" },
-      shots: [{"src": "assets/shots/nextaction-1.jpg", "caption": "첫 화면 디자인 시안 A·B·C 비교 — '지금 할 수 있는 일'을 담당자별로"}, {"src": "assets/shots/nextaction-2.jpg", "caption": "할 일 입력 — 제목 / 담당 / 날짜 한 줄과 선행 할 일 하나"}, {"src": "assets/shots/nextaction-3.jpg", "caption": "다크 모드 시안"}],
-      name: "다음 할 일 앱",
+      shots: [{"src": "assets/shots/nextaction-done.jpg", "caption": "계획 탭 — 할 일이 다 끝나면 도트 고양이가 튀어 오릅니다"}, {"src": "assets/shots/nextaction-list.jpg", "caption": "전체 목록 — 담당자별 카드에 완료 개수와 진행 막대"}, {"src": "assets/shots/nextaction-contrib.jpg", "caption": "기여도 탭 — 끝낸 일의 무게로 계산한 비율, 엑셀로 내보내기"}, {"src": "assets/shots/nextaction-sheet.jpg", "caption": "할 일 고치기 — 담당자 · 날짜 빠른 선택, 순서, 진척도, 무게"}],
+      name: "냥비에스 (다음 할 일 앱)",
       kicker: "Claude 앱 개발 · 개발 중",
-      oneLine: "할 일 하나가 끝나면 '다음에 누가 무엇을 할지'가 바로 보이는 팀 프로젝트용 안드로이드 앱",
+      oneLine: "할 일 하나가 끝나면 '다음에 누가 무엇을 할지'가 바로 보이고, 담당자별 기여도까지 정리되는 팀 프로젝트용 앱",
       problem:
         "Spot! 팀장 시절, 바뀐 일정이 카톡과 회의에만 남고 WBS는 중간에 끊겨 후반으로 갈수록 '다음 할 일을 몰라 다시 회의'하는 일이 잦았습니다. 제 경험을 Mom Test 방식(실제로 있었던 일만)으로 다시 묻고 문제를 정의했습니다.",
       approach: [
-        "기록자 한 명이 '제목 / 담당 / 날짜' 한 줄로 입력하고, 할 일마다 선행 할 일 하나를 연결",
-        "선행이 끝난 일만 '지금 할 수 있는 일'로 담당자별로 보여 주고, ✓ 한 번으로 완료하면 다음 일이 나타남",
-        "팀원은 로그인 없이 읽기 전용 링크로 확인 — Flutter 하나로 앱과 웹을 함께(ADR 4건으로 결정 기록)",
+        "기록자 한 명이 '제목 / 담당 / 날짜' 한 줄로 입력하고, 할 일마다 먼저 끝나야 할 일 하나를 연결",
+        "선행이 끝난 일만 '지금 할 수 있는 일'로 담당자별 카드에 보여 주고, ✓ 완료 한 번이면 다음 일이 나타남",
+        "기여도 탭에서 담당자별로 끝낸 일의 무게 비율을 보고, 할 일 목록과 기여도를 엑셀 파일로 내보냄",
+        "Flutter 하나로 안드로이드 앱과 아이폰용 웹앱을 함께, 저장은 Appwrite (결정 기록 ADR 4건)",
       ],
       roleKind: ["설계·검수", "설계·검수", "직접 구현"],
       role: [
-        "문제 정의 · IA · 사용자 여정 3개 · PRD(FR-01~21) · ERD · Spec/Plan을 단계마다 승인하며 진행",
-        "디자인 시안 3안을 비교해 고르고, 기능마다 QA 시트에 결과와 사람이 확인할 목록을 남김",
-        "한글 경로·에뮬레이터 그래픽·병렬 시험 오류 같은 환경 문제를 재현하고 해결 방법을 CLAUDE.md에 기록",
+        "문제 정의 · IA · 사용자 여정 3개 · PRD(기능 요구사항 36개) · ERD · Spec/Plan을 단계마다 승인하며 진행",
+        "디자인 후보 4개를 실제 화면에 입혀 비교해 고르고, 색 대비 34개 조합을 계산해 기준(4.5:1)을 맞춤",
+        "한글 경로 · 에뮬레이터 그래픽 · 병렬 시험 오류 같은 환경 문제를 재현하고 해결 방법을 CLAUDE.md에 기록",
       ],
       metrics: [
-        { value: "21", label: "기능 요구사항 (FR)", basis: "PRD 가설 v1 · 구현 진행 중", state: "cond" },
-        { value: "4", label: "ADR (결정 기록)", basis: "docs/adr 문서", state: "ok" },
+        { value: "36", label: "기능 요구사항 (FR)", basis: "PRD 가설 v1 · 구현 진행 중", state: "cond" },
+        { value: "37", label: "시험 파일 (flutter test)", basis: "도메인 · 서비스 · 화면 시험", state: "ok" },
+        { value: "34", label: "색 대비 조합 통과", basis: "WCAG 2.2 AA 직접 계산", state: "ok" },
         { value: "3", label: "핵심 사용자 여정", basis: "인터뷰 1건 기반 가설", state: "cond" },
-        { value: "14", label: "시험 파일 (flutter test)", basis: "연속 실행 통과 확인", state: "ok" },
       ],
       honest:
-        "개발 진행 중이며 근거 인터뷰는 본인 경험 1건입니다. 진행 중인 AICE 스터디에서 1~2주 써 보고 '다음 할 일을 몰라 다시 회의한 횟수'로 검증할 계획이며, 기준 횟수는 아직 정하지 않았습니다.",
-      stack: ["Flutter", "Dart", "Appwrite", "Android", "Clean Architecture", "Claude Code"],
+        "개발 중이며 근거 인터뷰는 본인 경험 1건입니다. 진행 중인 AICE 스터디에서 1~2주 써 보고 '다음 할 일을 몰라 다시 회의한 횟수'로 검증할 계획이고, 실제 폰 · 큰 글자 · 스크린리더 확인은 아직 하지 못했습니다. 화면은 LS ROKETS 팀 기록을 웹앱으로 띄운 것이며, 팀원 이름은 가렸습니다.",
+      stack: ["Flutter", "Dart", "Appwrite", "Android", "웹앱(PWA)", "Excel 내보내기", "Clean Architecture", "Claude Code"],
     },
   ],
 

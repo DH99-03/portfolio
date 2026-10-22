@@ -229,3 +229,4 @@ b { font-weight: 600; }
 .metric .basis--ok::before, .metric .basis--cond::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 4px; vertical-align: 0; }
 .metric .basis--ok::before { background: #1f7a5c; }
 .metric .basis--cond::before { background: linear-gradient(90deg, #a3620c 50%, transparent 50%); box-shadow: inset 0 0 0 1px #a3620c; }
+.shots--phone { grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: 1fr; }

@@ -55,7 +55,10 @@
 .pp-pager a:hover b { color: var(--accent); }
 .pp-pager__home { text-align: center; }
 
+.pp-gallery--phone { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px 18px; }
+.pp-gallery--phone .pp-shot img { max-height: 640px; }
 @media (max-width: 760px) {
+  .pp-gallery--phone { grid-template-columns: 1fr 1fr; }
   .pp { padding-top: 96px; }
   .pp-sec .ps-nums, .pp-storynums { grid-template-columns: 1fr 1fr; }
   .pp-sec .ps-num:nth-child(odd) { padding-left: 0; border-left: 0; }
