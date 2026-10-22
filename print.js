@@ -235,6 +235,40 @@
     );
   };
 
+
+  // 문제 정의 방식 (6단계) + 적용 사례 한 건
+  const pdTag = (st) => `<span class="pdst pdst--${st}">${esc(S.process.states[st])}</span>`;
+  const pdCasePage = (c, label) => {
+    page(
+      "",
+      `<p class="eyebrow">문제 정의 과정 · ${esc(c.label)}</p>
+      <p class="pdp-problem"><span>핵심 문제 문장</span>${esc(c.problem)}</p>
+      <ol class="pdp-chain">
+        <li><b>처음 생각</b><p>${esc(c.decision.start)}</p></li>
+        <li><b>검토하며 바뀐 것</b><p>${esc(c.decision.turn)}</p></li>
+        <li class="key"><b>나의 선택과 이유</b><p>${esc(c.decision.choice)}</p></li>
+        <li><b>결과물에 반영</b><p>${esc(c.decision.reflect)}</p></li>
+      </ol>
+      <ol class="pdp-track">${c.steps.map((s, i) => `<li><span class="n mono">0${i + 1}</span><b>${esc(S.process.steps[i].name)}</b>${pdTag(s.state)}<span class="d">${esc(s.did)}</span></li>`).join("")}</ol>
+      <p class="pdp-next"><b>다음 검증</b>${esc(c.next)}</p>`,
+      [label, docName]
+    );
+  };
+  const pdMethodPage = () => {
+    const P = S.process;
+    page(
+      "",
+      `<p class="eyebrow">문제 정의 방식</p>
+      <h2 class="h-page">불편을 근거 있는 문제와 검증 가능한 가설로</h2>
+      <p class="lead" style="margin-top:4px">${esc(P.lead)} 각 단계는 <b>${P.loop.map(esc).join(" → ")}</b> 순서의 문답으로 진행합니다.</p>
+      <ol class="pdp-steps">${P.steps
+        .map((s, i) => `<li><span class="mono">0${i + 1}</span><b>${esc(s.name)}</b><p class="q">${esc(s.q)}</p><dl><dt>AI가 묻는 것</dt><dd>${esc(s.ai)}</dd><dt>내가 판단하는 것</dt><dd>${esc(s.me)}</dd><dt>남기는 결과물</dt><dd>${esc(s.out)}</dd></dl></li>`)
+        .join("")}</ol>
+      <div class="pdp-princ">${P.principles.map((x) => `<div><b>${esc(x.title)}</b><p>${esc(x.desc)}</p></div>`).join("")}</div>
+      <p class="pdp-after">${esc(P.after)}</p>`,
+      ["권동현 · " + roleLabel, docName]
+    );
+  };
   // ---------- 문서 조립 ----------
   if (doc === "onepager") {
     onePager();
@@ -244,6 +278,8 @@
     const st = S.stories && S.stories[id];
     if (p) {
       projectA(p, null);
+      const pc = S.process && S.process.cases.find((c) => c.id === id);
+      if (pc) pdCasePage(pc, "권동현 · " + p.name);
       projectB(p, null);
       if (st) storyPages(st, "권동현 · " + p.name);
     } else {
@@ -262,6 +298,11 @@
   } else {
     coverPage();
     glancePage();
+    if (S.process) {
+      pdMethodPage();
+      const pc = S.process.cases.find((c) => picks.slice(0, 3).some((p) => p.id === c.id)) || S.process.cases[0];
+      pdCasePage(pc, "권동현 · " + roleLabel);
+    }
     picks.forEach((p, i) => {
       projectA(p, i);
       projectB(p, i);

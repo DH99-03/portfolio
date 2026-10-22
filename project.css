@@ -68,3 +68,4 @@
   .pp-pager { grid-template-columns: 1fr 1fr; }
   .pp-pager__home { display: none !important; }
 }
+.pp-pdnote { margin-top: 16px; font-size: 14px; color: var(--muted); }

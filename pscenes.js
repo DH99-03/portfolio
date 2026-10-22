@@ -82,6 +82,7 @@
     requestAnimationFrame(tick);
   };
 
+  let MAX_SHOTS = 99;
   const sceneHTML = (p, i) => `<section class="ps" id="ps-${esc(p.id)}" data-palette="${esc(p.palette || "")}" aria-labelledby="ps-name-${esc(p.id)}">
       <div class="ps__text">
         <p class="ps__no mono">PROJECT 0${i + 1}${p.award ? ` · <span>수상</span>` : ""}</p>
@@ -90,7 +91,7 @@
         <p class="ps__one">${esc(p.oneLine)}</p>
         ${factsHTML(p)}
         ${metricsHTML(p)}
-        <div class="ps-steps" aria-hidden="true">${p.shots.map((_, k) => `<i data-k="${k}"></i>`).join("")}<span class="mono">화면 1 / ${p.shots.length}</span></div>
+        <div class="ps-steps" aria-hidden="true">${p.shots.slice(0, MAX_SHOTS).map((_, k) => `<i data-k="${k}"></i>`).join("")}<span class="mono">화면 1 / ${Math.min(p.shots.length, MAX_SHOTS)}</span></div>
         <div class="ps-peek">
           <div class="ps-peek__row">
             <a class="ps-go" href="project.html?id=${esc(p.id)}" data-palette="${esc(p.palette || "")}">프로젝트 전체 보기 <span aria-hidden="true">→</span></a>
@@ -106,6 +107,7 @@
         </div>
       </div>
       <div class="ps__shots">${p.shots
+        .slice(0, MAX_SHOTS)
         .map(
           (sh, k) => `<figure class="ps-shot" data-k="${k}">
             <button class="ps-shot__frame" type="button" data-src="${esc(sh.src)}" data-cap="${esc(p.name + " · " + sh.caption)}" aria-label="${esc(sh.caption)} 크게 보기"><img src="${esc(sh.src)}" alt="${esc(p.name)} · ${esc(sh.caption)}" loading="lazy" /></button>
@@ -191,7 +193,8 @@
   });
 
   window.ProjectScenes = {
-    render(container, projects, boundary) {
+    render(container, projects, boundary, opts) {
+      MAX_SHOTS = (opts && opts.maxShots) || 99;
       ensureTextures();
       container.innerHTML = projects.map(sceneHTML).join("");
       paintEnds();

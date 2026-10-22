@@ -34,6 +34,7 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="pscenes.css" />
+  <link rel="stylesheet" href="pdef.css" />
 </head>
 <body>
   <a class="skip" href="#main">본문으로 건너뛰기</a>
@@ -103,25 +104,48 @@
       </div>
     </section>
 
-    <!-- VIBE CODING -->
+    <!-- HOW I BUILD: 문제 정의 방식 → 프로젝트에 적용한 과정 → 설계와 구현 → AI와 일하는 원칙 -->
     <section class="section" id="vibe">
       <div class="section__head">
         <div>
           <p class="eyebrow mono">02 / How I Build</p>
-          <h2>모르면 배워서 끝까지,<br />그리고 AI와 함께 만드는 법</h2>
+          <h2>문제를 정의하고,<br />AI와 함께 만드는 법</h2>
         </div>
         <p class="section__lead" id="vibe-thesis"></p>
       </div>
-      <div class="pillars" id="vibe-pillars"></div>
-      <h3 class="subhead">일하는 순서와 쓰는 스킬</h3>
-      <ol class="flow" id="vibe-flow"></ol>
-      <p class="flow__note" id="vibe-flownote"></p>
+
+      <div class="pd-block">
+        <div class="pd-kicker"><span class="mono">A</span><h3>문제 정의 방식</h3><p id="pd-lead"></p></div>
+        <div id="pd-steps"></div>
+      </div>
+
+      <div class="pd-block" id="pd-apply">
+        <div class="pd-kicker"><span class="mono">B</span><h3>프로젝트에 적용한 과정</h3><p>처음 생각과 최종 기획 사이에서 무엇이 바뀌었고, 제가 무엇을 골랐는지 적었습니다.</p></div>
+        <div id="pd-cases"></div>
+      </div>
+
+      <div class="pd-block">
+        <div class="pd-kicker"><span class="mono">C</span><h3>설계와 구현</h3><p id="pd-after"></p></div>
+        <ol class="flow" id="vibe-flow"></ol>
+        <p class="flow__note" id="vibe-flownote"></p>
+      </div>
+
+      <div class="pd-block">
+        <div class="pd-kicker"><span class="mono">D</span><h3>AI와 일할 때 지키는 것</h3></div>
+        <div class="pillars" id="vibe-pillars"></div>
+        <details class="fold">
+          <summary>쓰는 스킬 · 틀린 것에서 나온 규칙 · 사람의 몫 <span class="fold__hint">펼치기</span></summary>
+          <div class="fold__body">
+            <div class="skills vibe__tools" id="vibe-tools"></div>
+            <h3 class="subhead">틀린 것에서 나온 규칙</h3>
+            <ul class="lessons" id="vibe-lessons"></ul>
+            <p class="honest" id="vibe-human"></p>
+          </div>
+        </details>
+      </div>
+
       <h3 class="subhead">끝까지 해낸 장면 — 모르는 것이 생기면, 배워서, 끝낸다</h3>
       <div class="scenes" id="scene-list"></div>
-      <div class="skills vibe__tools" id="vibe-tools"></div>
-      <h3 class="subhead">틀린 것에서 나온 규칙</h3>
-      <ul class="lessons" id="vibe-lessons"></ul>
-      <p class="honest" id="vibe-human"></p>
     </section>
 
     <!-- STORY -->
@@ -209,6 +233,7 @@
 
   <script src="data.js"></script>
   <script src="pscenes.js"></script>
+  <script src="pdef.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

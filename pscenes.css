@@ -75,7 +75,7 @@ body, .nav--scrolled, .footer { transition: background-color .9s var(--ease), co
 .ps__text.is-peek .ps-nums, .ps__text.is-peek .ps-steps { display: none; }
 
 .ps__shots { display: grid; min-width: 0; }
-.ps-shot { min-height: 72vh; display: flex; flex-direction: column; justify-content: center; gap: 12px; }
+.ps-shot { min-height: 60vh; display: flex; flex-direction: column; justify-content: center; gap: 12px; }
 .ps-shot__frame {
   display: block; width: 100%; padding: 0; border-radius: 14px; overflow: hidden; background: #fff; border: 1px solid var(--line); cursor: zoom-in;
   box-shadow: 0 24px 60px -30px rgba(0, 0, 0, .45);
@@ -129,3 +129,6 @@ body, .nav--scrolled, .footer { transition: background-color .9s var(--ease), co
 .ps-end__arrow { grid-column: 2; grid-row: 1 / 4; width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; font-size: 24px; background: color-mix(in srgb, var(--end-fg, var(--on-ink)) 16%, transparent); transition: transform .3s var(--ease); }
 .ps-end:hover .ps-end__arrow { transform: translateX(4px); }
 @media (max-width: 600px) { .ps-end { padding: 22px; } .ps-end__arrow { width: 44px; height: 44px; font-size: 20px; } }
+/* 접힌 요약은 보이지도, 키보드로 닿지도 않게 */
+.ps-peek:not(.is-open) .ps-peek__body > div { visibility: hidden; }
+.ps-peek__inner ul { gap: 8px; }

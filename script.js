@@ -59,6 +59,65 @@
       .join("")}</div>`;
   };
 
+  // ---------- 목차 바로가기 (지금 위치 표시) ----------
+  const SITE_URL = "https://dh99-03.github.io/portfolio/";
+  const roleLink = (r) => SITE_URL + (r ? `?role=${encodeURIComponent(r.id)}` : "");
+  const copyText = async (text) => {
+    try { await navigator.clipboard.writeText(text); return true; } catch (e) {}
+    const ta = document.createElement("textarea");
+    ta.value = text; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.select();
+    let ok = false;
+    try { ok = document.execCommand("copy"); } catch (e) {}
+    ta.remove();
+    return ok;
+  };
+  const flash = (btn, msg) => {
+    const old = btn.dataset.label || btn.textContent;
+    btn.dataset.label = old;
+    btn.textContent = msg;
+    btn.classList.add("is-done");
+    clearTimeout(btn._t);
+    btn._t = setTimeout(() => { btn.textContent = old; btn.classList.remove("is-done"); }, 1800);
+  };
+  const toc = document.createElement("nav");
+  toc.className = "toc";
+  toc.setAttribute("aria-label", "목차 바로가기");
+  toc.innerHTML = `<button type="button" class="toc__pill" aria-expanded="false" aria-controls="toc-list"><span class="mono">목차</span><b class="toc__now"></b></button><ol class="toc__list" id="toc-list"></ol>`;
+  document.body.appendChild(toc);
+  const tocList = toc.querySelector(".toc__list");
+  const tocPill = toc.querySelector(".toc__pill");
+  let tocItems = [];
+  const renderToc = (picks) => {
+    const items = [{ id: "top", label: "첫 화면" }];
+    picks.forEach((p, i) => items.push({ id: "ps-" + p.id, label: p.name.replace(/\s*\(.*\)$/, ""), sub: `0${i + 1}` }));
+    if ($("#projects-tail")) items.push({ id: "projects-tail", label: "다른 프로젝트" });
+    items.push({ id: "vibe", label: "일하는 방식" }, { id: "story", label: "성장 과정" }, { id: "awards", label: "수상·자격" }, { id: "contact", label: "연락처" });
+    tocItems = items.map((x) => ({ ...x, el: document.getElementById(x.id) })).filter((x) => x.el);
+    tocList.innerHTML = tocItems
+      .map((x) => `<li><a href="#${esc(x.id)}" class="toc__a${x.sub ? " toc__a--proj" : ""}"><i aria-hidden="true"></i><span>${x.sub ? `<em class="mono">${x.sub}</em>` : ""}${esc(x.label)}</span></a></li>`)
+      .join("");
+    tocUpdate();
+  };
+  const tocUpdate = () => {
+    const y = window.scrollY + window.innerHeight * 0.4;
+    let cur = 0;
+    tocItems.forEach((x, i) => { if (x.el.getBoundingClientRect().top + window.scrollY <= y) cur = i; });
+    tocList.querySelectorAll(".toc__a").forEach((a, i) => {
+      a.classList.toggle("is-active", i === cur);
+      if (i === cur) a.setAttribute("aria-current", "location"); else a.removeAttribute("aria-current");
+    });
+    if (tocItems[cur]) toc.querySelector(".toc__now").textContent = tocItems[cur].label;
+  };
+  const setToc = (open) => { toc.classList.toggle("is-open", open); tocPill.setAttribute("aria-expanded", String(open)); };
+  tocPill.addEventListener("click", () => setToc(!toc.classList.contains("is-open")));
+  tocList.addEventListener("click", (e) => { if (e.target.closest("a")) setToc(false); });
+  document.addEventListener("click", (e) => { if (!toc.contains(e.target)) setToc(false); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") setToc(false); });
+  let tocTick = false;
+  window.addEventListener("scroll", () => { if (!tocTick) { tocTick = true; requestAnimationFrame(() => { tocUpdate(); tocTick = false; }); } }, { passive: true });
+  window.addEventListener("resize", tocUpdate);
+
   // ---------- FEATURED ----------
   const list = (arr) => `<ul>${arr.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>`;
   const roleList = (p) =>
@@ -73,11 +132,12 @@
     const byId = (id) => S.featured.find((p) => p.id === id);
     const picks = full ? S.featured : order.map(byId).filter(Boolean);
     const rest = full ? [] : S.featured.filter((p) => !order.includes(p.id));
-    window.ProjectScenes.render($("#pscenes"), picks, [$("#top"), $("#projects .section__head"), $("#projects-tail"), $("#vibe")]);
+    window.ProjectScenes.render($("#pscenes"), picks, [$("#top"), $("#projects .section__head"), $("#projects-tail"), $("#vibe")], { maxShots: 3 });
     $("#ps-more-wrap").hidden = !rest.length;
     $("#ps-more").innerHTML = rest
       .map((p) => `<li><a href="project.html?id=${esc(p.id)}"><b>${esc(p.name)}</b><p>${esc(p.oneLine)}</p><span class="mono">${esc(p.metrics[0].value)} ${esc(p.metrics[0].label)} →</span></a></li>`)
       .join("");
+    renderToc(picks);
   };
   renderFeatured(S.featured.map((p) => p.id), true);
 
@@ -98,6 +158,15 @@
       </li>`
     )
     .join("");
+
+  // ---------- 문제 정의 방식 ----------
+  let pdCases = null;
+  if (S.process && window.ProblemDef) {
+    $("#pd-lead").textContent = S.process.lead;
+    $("#pd-after").textContent = S.process.after;
+    window.ProblemDef.renderSteps($("#pd-steps"));
+    pdCases = window.ProblemDef.renderCases($("#pd-cases"), "spot");
+  }
 
   // ---------- VIBE ----------
   if (S.vibe) {
@@ -219,6 +288,12 @@
     rolesBox.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.role === (r ? r.id : "all"))));
     renderFeatured(r ? r.order : allOrder, !r);
     currentRole = r;
+    const rc = $("#role-copy");
+    if (rc) { rc.title = roleLink(r); rc.setAttribute("aria-label", `${r ? r.label : "전체"} 관점 링크 복사: ${roleLink(r)}`); }
+    if (pdCases) {
+      const ids = (r ? r.order : allOrder).filter((x) => window.ProblemDef.hasCase(x));
+      if (ids.length) pdCases.select(ids[0]);
+    }
     const op = $("#hero-onepager");
     op.href = rolePdf(r, "원페이저");
     op.textContent = r ? `${r.label} 원페이저 PDF` : "원페이저 PDF";
@@ -247,9 +322,12 @@
   if (S.roles && S.roles.length) {
     rolesBox.innerHTML =
       `<span class="roles__label">어떤 직무로 보시나요?</span>` +
-      ROLES.map((r) => `<button type="button" class="rolebtn" data-role="${esc(r.id)}" aria-pressed="false">${esc(r.label)}</button>`).join("");
-    rolesBox.addEventListener("click", (e) => {
-      const b = e.target.closest("button");
+      ROLES.map((r) => `<button type="button" class="rolebtn" data-role="${esc(r.id)}" aria-pressed="false">${esc(r.label)}</button>`).join("") +
+      `<button type="button" class="rolelink" id="role-copy">이 관점 링크 복사</button>`;
+    rolesBox.addEventListener("click", async (e) => {
+      const c = e.target.closest(".rolelink");
+      if (c) { flash(c, (await copyText(roleLink(currentRole))) ? "복사했어요 ✓" : "복사 실패: 주소창을 복사해 주세요"); return; }
+      const b = e.target.closest(".rolebtn");
       if (b) setRole(b.dataset.role, false);
     });
     let initial = "all";
@@ -270,7 +348,8 @@
         return `<li class="dl__row${cur ? " is-current" : ""}">
           <span class="dl__name">${esc(r ? r.label : "전체 (모든 프로젝트)")}${cur ? ' <span class="mono dl__now">지금 보는 관점</span>' : ""}</span>
           <a class="dl__file" href="${esc(rolePdf(r, "원페이저"))}" download>원페이저 <span class="mono">1쪽</span></a>
-          <a class="dl__file" href="${esc(rolePdf(r, "포트폴리오"))}" download>포트폴리오 <span class="mono">${r ? "9~10쪽" : "전체"}</span></a>
+          <a class="dl__file" href="${esc(rolePdf(r, "포트폴리오"))}" download>포트폴리오 <span class="mono">${r ? "12쪽" : "16쪽"}</span></a>
+          <button type="button" class="dl__file dl__link" data-copy="${esc(roleLink(r))}" title="${esc(roleLink(r))}">링크 복사</button>
         </li>`;
       })
       .join("");
@@ -288,6 +367,10 @@
       renderDl();
       dl.showModal();
     }
+  });
+  dl.addEventListener("click", async (e) => {
+    const c = e.target.closest("[data-copy]");
+    if (c) flash(c, (await copyText(c.dataset.copy)) ? "복사됨 ✓" : "복사 실패");
   });
   $("#dl-close").addEventListener("click", () => dl.close());
   dl.addEventListener("click", (e) => { if (e.target === dl) dl.close(); });

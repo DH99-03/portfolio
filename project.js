@@ -91,8 +91,12 @@
     : "";
 
   const stack = (f ? f.stack : st && st.tech) || [];
+  const pdef = window.ProblemDef && window.ProblemDef.hasCase(id)
+    ? `<section class="pp-sec"><h2 class="pp-h2">문제 정의 과정</h2>${window.ProblemDef.caseFor(id)}<p class="pp-pdnote">6단계 방식 설명은 <a class="ps-full" href="index.html#pd-apply">홈의 '문제를 정의하고, AI와 함께 만드는 법'</a>에 있습니다.</p></section>`
+    : "";
   main.innerHTML =
     hero +
+    pdef +
     gallery +
     story +
     (stack.length ? `<section class="pp-sec"><h2 class="pp-h2">쓴 기술</h2><div class="chips">${stack.map((s) => `<span class="chip">${esc(s)}</span>`).join("")}</div></section>` : "") +
