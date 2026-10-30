@@ -32,13 +32,14 @@ window.SITE = {
     {
       id: "sw", label: "SW 개발·IT 운영", file: "SW개발_IT운영",
       subline: "만들고, 시험하고, 배포까지 확인하는 사람.",
-      intro: "Next.js와 TypeScript로 웹앱을 만들어 SQLite에서 Supabase(Postgres)로 옮기고 Vercel에 배포했습니다. 단위·계약·API 시험을 단계마다 돌렸고, 느린 응답은 측정으로 원인을 찾아 서버 함수 지역을 옮겨 해결했습니다. 지금은 Flutter와 Appwrite로 안드로이드 앱을 계층 구조에 맞춰 만들고 있습니다.",
+      intro: "3인 팀 프로젝트 VeriOrder에서 백엔드·DB·배포를 맡아, 주문 상태 규칙과 권한을 화면이 아니라 DB가 거절하게 만들고 운영 주소에서 점검했습니다. 혼자서는 Next.js와 TypeScript로 웹앱을 만들어 SQLite에서 Supabase(Postgres)로 옮기고 Vercel에 배포했습니다. 단위·계약·API 시험을 단계마다 돌렸고, 느린 응답은 측정으로 원인을 찾아 서버 함수 지역을 옮겨 해결했습니다. 지금은 Flutter와 Appwrite로 안드로이드 앱을 계층 구조에 맞춰 만들고 있습니다.",
       proof: [
+        "VeriOrder: Supabase RLS · 상태 전이 함수 · 추가만 되는 기록, 운영 스모크 점검 22/22",
         "미팅 전 질문 가이드: API 시험 141개 · 저장소 계약 시험 · 남용 방지 상한 · Vercel 배포",
         "서버 함수 지역을 DB와 맞춰 응답 0.7초 → 0.4초 (측정 후 수정)",
         "Spot!: FastAPI · MySQL · WebSocket 백엔드를 Docker 이미지로 AWS 배포",
       ],
-      order: ["salesguide", "nextaction", "spot"],
+      order: ["veriorder", "salesguide", "nextaction"],
     },
     {
       id: "data", label: "데이터 분석", file: "데이터분석",
@@ -47,9 +48,10 @@ window.SITE = {
       proof: [
         "부산 심야약국: API 결측 전수 발견 · 보행 경로 349,376쌍 · 단위검사 38개 · 결과 파일 14개 재현",
         "LS ROKETS: 학습·보정·시험 구간을 나눠 고장 유형별 임계값 선정, 과적합 가능성까지 기록",
+        "VeriOrder: 환율 · 도매 · 금속 시세에 받은 시각과 '읽음 · 내용 없음 · 못 읽음'을 붙여 저장, 과거 시세 1,804줄을 중복 없이 채움",
         "SQLD · ADsP · 정보처리기사",
       ],
-      order: ["busan", "rokets", "spot"],
+      order: ["busan", "rokets", "veriorder"],
     },
     {
       id: "plan", label: "서비스 기획·DX", file: "서비스기획_DX",
@@ -59,8 +61,9 @@ window.SITE = {
         "미팅 전 질문 가이드: 5 Whys로 원인 정의 → 요구사항 · 수락 기준 → 배포까지 1인 진행",
         "냥비에스(다음 할 일 앱): 기능 요구사항 36개 · 시험 파일 37개 · 색 대비 34개 조합 계산",
         "매장 RFID 도입 제안과 본사 협의로 재고 오류 90% 이상 감소",
+        "VeriOrder: AI 페르소나 인터뷰 6명의 패턴으로 문제 1순위를 '옮겨 적기'에서 '중복 · 수정 주문 놓침'으로 바꿈 (가설)",
       ],
-      order: ["salesguide", "nextaction", "rokets"],
+      order: ["salesguide", "veriorder", "rokets"],
     },
     {
       id: "sales", label: "IT 기술영업", file: "IT기술영업",
@@ -70,8 +73,9 @@ window.SITE = {
         "미팅 전 질문 가이드: 딜 유형별 질문 은행 · '물었지만 모름' 구분 · 고객용/내부용 보고서",
         "매장 RFID 도입 제안과 본사 협의로 재고 오류 90% 이상 감소",
         "Spot!: 커뮤니티·영상 크롤링과 설문 66명으로 고객 불편 정의",
+        "VeriOrder: 주문 메일을 받는 B2B 영업지원 업무 도구, 담당자가 승인하기 전에는 등록도 발송도 되지 않게 설계",
       ],
-      order: ["salesguide", "spot", "rokets"],
+      order: ["salesguide", "veriorder", "spot"],
     },
   ],
 
@@ -79,6 +83,10 @@ window.SITE = {
   // 프로젝트 장면색. featured의 palette 값과 짝. 홈의 프로젝트 장면과 프로젝트 페이지 배경에 쓰입니다.
   // light = 밝은 모드에서, dark = 어두운 모드에서 (어두운 장면은 두 모드에서 같은 색)
   palettes: {
+    verify: { // VeriOrder: 주문서 확인 화면, 흰 카드와 짙은 남색 체크
+      light: { bg: "#ecf0f7", surface: "#ffffff", sunken: "#e1e7f1", line: "#cfd8e6", text: "#13213f", muted: "#47546e", faint: "#5d6a84", accent: "#1d4d9c", "accent-soft": "#dbe5f5", "on-ink": "#ffffff", ok: "#1f7a5c", cond: "#9a5d0c" },
+      dark: { bg: "#0e1830", surface: "#15223f", sunken: "#192848", line: "#27375a", text: "#e8eefa", muted: "#a8b5cf", faint: "#8d9ab6", accent: "#8fb2ff", "accent-soft": "rgba(143,178,255,.14)", "on-ink": "#0e1830", ok: "#72d3ab", cond: "#f2bb6a" },
+    },
     paper: { // 미팅 전 질문 가이드: 요청서 종이
       light: { bg: "#f5f4ef", surface: "#ffffff", sunken: "#ebe9e2", line: "#dcd9cf", text: "#1b1d22", muted: "#535962", faint: "#686e77", accent: "#2b4fd1", "accent-soft": "#e2e7fa", "on-ink": "#ffffff", ok: "#1f7a5c", cond: "#a3620c" },
       dark: { bg: "#11141c", surface: "#181c26", sunken: "#1c2130", line: "#2a3042", text: "#e9ecf3", muted: "#a5acbd", faint: "#8b93a6", accent: "#8ea6ff", "accent-soft": "rgba(142,166,255,.14)", "on-ink": "#11141c", ok: "#72d3ab", cond: "#f2bb6a" },
@@ -105,6 +113,7 @@ window.SITE = {
   pdf: {
     all: { label: "전체", file: "전체" },
     projects: [
+      { id: "veriorder", file: "VeriOrder" },
       { id: "salesguide", file: "미팅전질문가이드" },
       { id: "rokets", file: "LS_ROKETS" },
       { id: "spot", file: "Spot" },
@@ -164,6 +173,13 @@ window.SITE = {
       learned: "Claude Code에 규칙과 스킬을 깔고, 문서를 먼저 쓴 뒤 작게 나눠 시험하고 커밋하는 방식을 익힘",
       done: "이틀 동안 커밋 102개로 Supabase 연동과 Vercel 배포까지 완료",
     },
+    {
+      year: "2026",
+      where: "LS JUMP-UP · VeriOrder",
+      unknown: "팀 프로젝트에서 DB 권한 규칙과 운영 배포를 책임져 본 적 없음",
+      learned: "규칙을 화면이 아니라 DB가 거절하게 만들고, 실제 DB에 SQL로 겨뤄 정말 거부되는지 확인하는 방식을 익힘",
+      done: "PR 57건, 운영 스모크 점검 22/22로 마감일에 배포까지 완료",
+    },
   ],
 
   // 문제 정의 방식: 6단계와 프로젝트별 적용 기록. state = ok(실행함) / cond(가설·제한적) / plan(검증 계획) / skip(건너뜀)
@@ -187,6 +203,27 @@ window.SITE = {
       { name: "사용자 검증", q: "실제 사용자에게도 유효한가?", desc: "인터뷰 · 시제품으로 같은 문제를 겪는지, 제안이 도움이 되는지 확인하고, 처리 시간 · 수정 횟수처럼 문제에 맞는 기준을 미리 정합니다.", ai: '"무엇을, 누구에게, 어떻게 확인할까?"', me: "실제 사용자에게 확인한 결과로 문제 정의와 기획을 고친다", out: "검증 기록 · 수정한 가설과 기획" },
     ],
     cases: [
+      {
+        id: "veriorder",
+        label: "VeriOrder",
+        context: "LS JUMP-UP 3인 팀 프로젝트 · 배포 완료",
+        problem: "영업지원 담당자는 같은 거래처가 메일 · 카톡 · 전화로 주문을 나눠 보내거나 바꿀 때, 원주문과 변경분이 이어지지 않아 중복 입력하거나 변경을 놓치고, 출고 뒤에야 알아 수습한다.",
+        decision: {
+          start: "처음 팀 문장은 '거래처마다 양식이 달라 옮겨 적고 대조하느라 시간을 쓴다'였습니다. 저는 MECE 로직트리로 '결정할 사람에게 대조 · 준비 작업까지 한 사람의 수작업으로 떠넘겨져 있다'를 원인으로 봤습니다.",
+          turn: "AI가 연기한 페르소나 6명을 인터뷰하니 5명이 중복 · 수정 주문을 놓쳐 출고 뒤에 수습한 일(중복 출고 회수, 재발행)을 말했습니다. 그래서 문제 1순위가 '옮겨 적기'에서 '놓침'으로 바뀌었습니다.",
+          choice: "놓침을 막으려면 AI가 더 많이 하는 것보다 '사람이 확인하기 전에는 아무것도 확정되지 않는' 구조가 먼저라고 봤습니다. 자동 등록 대신 담당자 승인을 DB 규칙으로 강제하고, 바뀐 값은 지우지 않고 '대체됨'으로 남기기로 했습니다. 팀에서는 날씨 · 공휴일 데이터를 빼고 '최적의 단가'를 '권장 범위와 근거'로 바꿨습니다.",
+          reflect: "요청 상태 5가지를 DB 함수로만 바꾸고, 같은 메일은 한 건만, 요청 기록은 추가만 되게 했습니다. RLS로 본인 접수 건만 보이고, 단가 카드는 최근 3일 도매 시세 평균 ±10%로 범위 밖을 경고합니다.",
+        },
+        steps: [
+          { state: "cond", did: "공개 자료 데스크 리서치. 현장 사례 7건이 모두 업체 홍보글이라 한계로 적고, 학술 실험 · 정보화통계 수치 3건을 직접 찾아 더함" },
+          { state: "cond", did: "영어권 커뮤니티 글 172개로 단어 분석. 주제 분석(LDA)은 시드에 따라 결과가 바뀌어(안정도 0.24~0.31) 근거로 쓰지 않음" },
+          { state: "cond", did: "가상 페르소나 6명(내가 2명)을 AI 인터뷰하고, 두 명 이상이 말한 것만 패턴 표로 정리. 실제 사람 인터뷰는 아님" },
+          { state: "ok", did: "세 명이 5 Whys를 따로 써서 3명이 모두 말한 원인만 뼈대로 삼고, 인터뷰 뒤 문제 문장 후보 3개를 '사고로 이어진 사례' 기준으로 순위를 매김" },
+          { state: "ok", did: "'AI는 읽고, 사람이 확인한 뒤 등록' · 챗봇은 조회와 초안만 · 3일 범위와 중단선(안 되면 자르는 순서)을 정함" },
+          { state: "plan", did: "실제 영업지원 담당자에게 써 보게 하고 처리 시간과 놓친 건수를 재는 것이 다음 단계. 아직 미측정" },
+        ],
+        next: "인터뷰가 가상 페르소나라 실제 담당자에게 같은 문제가 있는지부터 확인하고, 실제 Claude 호출로 추출 정확도를 재야 합니다.",
+      },
       {
         id: "spot",
         label: "Spot!",
@@ -295,43 +332,44 @@ window.SITE = {
     { period: "2024.06 – 12", title: "LG DX SCHOOL 1기", desc: "크롤링, 텍스트마이닝, 딥러닝, LLM, Flutter, 클라우드까지. 고객 데이터에서 문제를 찾고 서비스로 구현하는 BX·CX·DX 과정에서 프로젝트 3회 모두 수상.", tag: "AI" },
     { period: "2025", title: "현장 운영과 시스템 개선", desc: "매장의 재고 데이터 불일치를 추적하고 RFID 도입을 이끌며, 데이터 정합성이 현장 업무를 어떻게 바꾸는지 체감.", tag: "Field" },
     { period: "2026.08 – 11", title: "LS JUMP-UP · 제조 디지털 트윈", desc: "설비 데이터 분석, 예지보전 모델, 대시보드. 분석 결과가 현장의 점검 순서와 기록으로 이어지게 만드는 법을 배우는 중.", tag: "Manufacturing" },
-    { period: "2026.10 –", title: "Claude Code · 바이브코딩", desc: "하네스(규칙·스킬)와 문서 중심으로 AI와 일하는 법을 익힘. 웹앱 하나를 문제 정의부터 배포까지 끝내고, 같은 방식으로 Flutter 앱을 만드는 중.", tag: "AI Dev" },
+    { period: "2026.10 –", title: "Claude Code · 바이브코딩", desc: "하네스(규칙·스킬)와 문서 중심으로 AI와 일하는 법을 익힘. 웹앱 하나를 문제 정의부터 배포까지 끝내고, 3인 팀 프로젝트 VeriOrder에서 백엔드 · DB · 배포를 맡았으며, 같은 방식으로 Flutter 앱을 만드는 중.", tag: "AI Dev" },
   ],
 
   // 대표 프로젝트. metrics의 basis = 숫자의 측정 기준, state = "ok"(확인함) / "cond"(조건·가정이 붙음)
   featured: [
     {
-      id: "salesguide",
-      palette: "paper",
-      facts: { period: "2026.10", team: "1인", share: "100%", role: "기획 · 설계 · 검수 (구현은 Claude Code)" },
-      shots: [{"src": "assets/shots/salesguide-1.jpg", "caption": "요청서 목록 — 진행률과 함께 '내용 확인 · 모름' 개수를 따로 보여 줍니다"}, {"src": "assets/shots/salesguide-2.jpg", "caption": "미팅 전 질문 가이드 — 질문과 'SE에게 왜 필요한가'를 함께, 못 얻은 답은 '물었지만 모름'으로"}, {"src": "assets/shots/salesguide-3.jpg", "caption": "요청서 상세 — SE가 다시 확인할 것을 맨 위에 모음"}, {"src": "assets/shots/salesguide-4.jpg", "caption": "보고서 PDF — 고객용·내부용 미리보기"}],
-      name: "미팅 전 질문 가이드",
-      kicker: "웹앱 풀사이클 개발 · 배포 완료",
-      oneLine: "영업(AE)이 기술영업(SE)에게 넘기는 요청에서 빠지는 정보를, 미팅 전에 먼저 보이게 하는 요청서 웹앱",
+      id: "veriorder",
+      palette: "verify",
+      facts: { period: "2026.10", team: "3인", share: "40%", role: "백엔드 · DB · 외부 데이터 · 배포" },
+      shots: [{"src": "assets/shots/veriorder-inbox.jpg", "caption": "접수함 — 메일 원문과 AI가 정리한 품목 · 수량 · 단위를 나란히, 확인 전 값은 '추출값'으로 표시"}, {"src": "assets/shots/veriorder-data.jpg", "caption": "팀 발표 자료(제 파트) — 메일 한 통이 요청 카드 한 건, 승인하면 주문 버전, 상태가 바뀔 때마다 기록 한 줄"}, {"src": "assets/shots/veriorder-rls.jpg", "caption": "팀 발표 자료(제 파트) — 표마다 누가 읽고 쓰는지 DB와 서버가 막는 규칙"}, {"src": "assets/shots/veriorder-review.jpg", "caption": "원문 대조 확인 — 문장마다 근거를 펼쳐 보고, 승인 버튼으로만 등록 (메일 주소는 가림)"}, {"src": "assets/shots/veriorder-price.jpg", "caption": "단가 카드 — 최근 3일 도매 시세 평균 ±10%를 벗어나면 경고, 시세가 없으면 0원 대신 '자료가 없습니다'"}, {"src": "assets/shots/veriorder-sources.jpg", "caption": "팀 발표 자료(제 파트) — 외부 데이터 4종을 직접 호출해 확인, 값마다 받은 시각과 세 가지 결과"}, {"src": "assets/shots/veriorder-chat.jpg", "caption": "AI 도우미 — 승인한 주문과 저장한 합의로만 답하고 근거 메일 링크를 붙임. 등록 · 발송은 못 함"}, {"src": "assets/shots/veriorder-tests.jpg", "caption": "팀 발표 자료(제 파트) — 돌려 본 시험과 못 한 것"}, {"src": "assets/shots/veriorder-orders.jpg", "caption": "주문 화면 — 승인한 주문의 품목 표와 버전 기록, 바뀐 값은 '대체됨'으로 남김"}],
+      name: "VeriOrder",
+      kicker: "LS JUMP-UP 프로젝트 2 · 실시간 데이터 팀 프로젝트",
+      oneLine: "AI가 주문 메일을 읽고, 담당자는 원문 근거를 보고 확인 · 승인만 하는 B2B 영업지원 웹앱",
       problem:
-        "IT B2B에서는 SE가 필요한 정보의 기준이 AE와 합의되어 있지 않아, 넘어오는 요청에 필수 정보가 빠지고 SE가 되묻느라 시간을 씁니다. 5 Whys로 원인을 '완성된 요청의 기준이 없다'로 좁혔습니다(현직자 인터뷰 전 가설).",
+        "영업지원 담당자는 거래처마다 양식이 다른 주문 메일을 원문과 일일이 대조하고, 중복 · 수정 주문을 놓쳐 출고 뒤에야 수습합니다. AI가 연기한 페르소나 6명 중 5명이 같은 이야기를 해서 문제 1순위를 '옮겨 적기'에서 '놓침'으로 바꿨습니다(실제 현업 확인 전 가설).",
       approach: [
-        "문제 정의 → IA → 사용자 여정 → PRD → ERD → Spec·Plan → 구현 → QA 순서로 문서를 먼저 쓰고, 문서와 코드가 다르면 문서부터 고침",
-        "딜 유형별 질문 은행으로 요청서를 채우고, '미입력'과 '물었지만 모름'을 구분해 SE가 다시 확인할 곳을 보이게 함",
-        "Claude(Haiku) 메모 점검 · 공유 링크 · 파일 가져오기 · 보고서 PDF 추가, 외부 전송 동의와 가명화, 확인 전 AI 채움은 전달 불가",
-        "SQLite로 시작해 저장소 계층을 나눈 뒤 Supabase(Postgres)로 옮기고 Vercel에 배포, 방문자별 분리와 남용 방지 상한",
+        "팀 설계: 단계가 정해진 파이프라인에 LLM은 추출 · 분류에만 쓰고, 단위 환산 · 단가 허용 오차 · 중복 판별 같은 숫자 검증은 코드만. 등록 · 발송은 담당자 승인으로만, 챗봇은 조회와 초안까지",
+        "요청 상태 5가지(신청 · 승인 · 처리 중 · 완료 · 반려)는 DB 함수로만 바뀌고 건너뛰기 · 사유 없는 반려는 DB가 거부. 요청 기록은 추가만 되고, 바뀐 값은 '대체됨'으로, 같은 Message-ID는 한 건만",
+        "RLS로 일반 계정은 본인 접수 건만, 경영 계정은 요청 표 0줄, 관리자는 상태 변화만 보고 메일 본문은 못 읽음. 역할은 관리자만 바꾸고 마지막 관리자는 낮출 수 없음",
+        "Gmail(5분 확인) · 환율 · KAMIS 도매 시세 · 금속 시세는 서버만 부르고, 값마다 받은 시각과 '읽음 · 내용 없음 · 못 읽음'을 붙여 저장. 단가 카드는 코드가 계산하고 단가를 자동으로 바꾸지 않음",
       ],
-      roleKind: ["설계·검수", "설계·검수", "조율·협업"],
+      roleKind: ["설계·검수", "설계·검수", "직접 구현", "조율·협업"],
       role: [
-        "문제 정의와 모든 결정(D1~D76)을 직접 내리고 근거와 함께 문서로 기록",
-        "Claude Code에 하네스(규칙·스킬)를 깔고 단계별로 구현을 맡긴 뒤, 시험 결과와 화면을 직접 확인해 통과 여부 판단",
-        "계정·DB 비밀번호·대시보드 설정·배포 승인 같은 '사람의 몫'을 맡고, 느린 응답은 측정으로 원인(함수 지역)을 찾아 해결",
+        "ERD 확정, 스키마 · 상태 전이 함수 · RLS · 단가 카드 뷰를 Claude Code로 만들고 실제 DB에 SQL로 겨뤄 거부되는지 확인 (대표 PR #53)",
+        "외부 데이터 후보 50개 중 4개를 골라 수집 · 저장, 단가 카드 계산, 분석 화면과 읽기 전용 경영 역할, Gmail 수신과 광고 메일 제외",
+        "Supabase · Vercel · Google Cloud(OAuth 동의 화면) 콘솔 설정, API 키 신청, 배포와 운영 장애 대응, 시험 보고서 · QA 시트 · 스모크 점검",
+        "팀원 PR을 가장 많이 머지하고 15건 리뷰, 발표에서 데이터 구조 · 권한 · 외부 데이터 · 시험 결과(9~15장) 담당",
       ],
       metrics: [
-        { value: "102", label: "커밋 (이틀)", basis: "Git 기록", state: "ok" },
-        { value: "141", label: "API 시험 (공유 링크 단계)", basis: "자동 시험 실행 결과", state: "ok" },
-        { value: "0.7 → 0.4초", label: "서버 응답 (지역 조정 후)", basis: "한 PC에서 5회씩 측정", state: "cond" },
-        { value: "D1–D76", label: "기록한 결정", basis: "개발 계획 문서의 결정 목록", state: "ok" },
+        { value: "57", label: "머지된 PR (팀 185건 중)", basis: "GitHub PR 기록 · 2026-10-29", state: "ok" },
+        { value: "1,020", label: "자동 시험 · 실패 0", basis: "팀 전체 · 파이썬 832(건너뜀 30) + 화면 188", state: "ok" },
+        { value: "22 / 22", label: "운영 스모크 점검", basis: "로그인 없이 내용이 새지 않는지 · 운영 주소", state: "ok" },
+        { value: "4종", label: "외부 데이터 직접 호출", basis: "Gmail · 환율 · 도매 시세 · 금속 시세", state: "ok" },
       ],
       honest:
-        "모든 데이터는 가상이며, 질문 은행이 실제 현장에 맞는지는 현직자 인터뷰 전이라 아직 증명하지 못했습니다. 키보드 전 경로·스크린리더·실기기 확인은 미확인으로 남겨 두었습니다.",
-      stack: ["Next.js 16", "React 19", "TypeScript", "zod", "SQLite", "Supabase", "Vercel", "Claude API", "Claude Code"],
-      live: { label: "서비스 열어 보기", url: "https://sales-service-gamma.vercel.app/" },
+        "메일 · 거래처 · 주문은 모두 가상 자료이고, 인터뷰는 AI가 연기한 페르소나라 문제 정의는 가설입니다. 실제 Claude 호출로 잰 추출 정확도와 처리 시간 단축은 아직 재지 못했고, 직접 눌러 본 QA는 94개 중 71개 통과입니다. 기여 40%는 PR 수(57 / 185, 약 31%)에 콘솔 설정과 배포 · 운영을 더해 제가 매긴 값입니다.",
+      stack: ["Supabase · PostgreSQL · RLS", "Python", "Next.js · TypeScript", "Vercel", "Gmail API", "Google Cloud OAuth", "Claude Code"],
+      live: { label: "서비스 열어 보기 (Google 로그인)", url: "https://veriorder.vercel.app" },
     },
     {
       id: "rokets",
@@ -364,6 +402,39 @@ window.SITE = {
         "합성 데이터의 현재 상태 분류 결과이며 미래 고장 예측은 아닙니다. 학습–시험 F1 차이로 과적합 가능성을 함께 기록했습니다.",
       stack: ["Python", "Plotly Dash", "scikit-learn", "MySQL", "SQLAlchemy", "Codex"],
       link: { label: "GitHub", url: "https://github.com/DH99-03/LS_Rokets" },
+    },
+    {
+      id: "salesguide",
+      palette: "paper",
+      facts: { period: "2026.10", team: "1인", share: "100%", role: "기획 · 설계 · 검수 (구현은 Claude Code)" },
+      shots: [{"src": "assets/shots/salesguide-1.jpg", "caption": "요청서 목록 — 진행률과 함께 '내용 확인 · 모름' 개수를 따로 보여 줍니다"}, {"src": "assets/shots/salesguide-2.jpg", "caption": "미팅 전 질문 가이드 — 질문과 'SE에게 왜 필요한가'를 함께, 못 얻은 답은 '물었지만 모름'으로"}, {"src": "assets/shots/salesguide-3.jpg", "caption": "요청서 상세 — SE가 다시 확인할 것을 맨 위에 모음"}, {"src": "assets/shots/salesguide-4.jpg", "caption": "보고서 PDF — 고객용·내부용 미리보기"}],
+      name: "미팅 전 질문 가이드",
+      kicker: "웹앱 풀사이클 개발 · 배포 완료",
+      oneLine: "영업(AE)이 기술영업(SE)에게 넘기는 요청에서 빠지는 정보를, 미팅 전에 먼저 보이게 하는 요청서 웹앱",
+      problem:
+        "IT B2B에서는 SE가 필요한 정보의 기준이 AE와 합의되어 있지 않아, 넘어오는 요청에 필수 정보가 빠지고 SE가 되묻느라 시간을 씁니다. 5 Whys로 원인을 '완성된 요청의 기준이 없다'로 좁혔습니다(현직자 인터뷰 전 가설).",
+      approach: [
+        "문제 정의 → IA → 사용자 여정 → PRD → ERD → Spec·Plan → 구현 → QA 순서로 문서를 먼저 쓰고, 문서와 코드가 다르면 문서부터 고침",
+        "딜 유형별 질문 은행으로 요청서를 채우고, '미입력'과 '물었지만 모름'을 구분해 SE가 다시 확인할 곳을 보이게 함",
+        "Claude(Haiku) 메모 점검 · 공유 링크 · 파일 가져오기 · 보고서 PDF 추가, 외부 전송 동의와 가명화, 확인 전 AI 채움은 전달 불가",
+        "SQLite로 시작해 저장소 계층을 나눈 뒤 Supabase(Postgres)로 옮기고 Vercel에 배포, 방문자별 분리와 남용 방지 상한",
+      ],
+      roleKind: ["설계·검수", "설계·검수", "조율·협업"],
+      role: [
+        "문제 정의와 모든 결정(D1~D76)을 직접 내리고 근거와 함께 문서로 기록",
+        "Claude Code에 하네스(규칙·스킬)를 깔고 단계별로 구현을 맡긴 뒤, 시험 결과와 화면을 직접 확인해 통과 여부 판단",
+        "계정·DB 비밀번호·대시보드 설정·배포 승인 같은 '사람의 몫'을 맡고, 느린 응답은 측정으로 원인(함수 지역)을 찾아 해결",
+      ],
+      metrics: [
+        { value: "102", label: "커밋 (이틀)", basis: "Git 기록", state: "ok" },
+        { value: "141", label: "API 시험 (공유 링크 단계)", basis: "자동 시험 실행 결과", state: "ok" },
+        { value: "0.7 → 0.4초", label: "서버 응답 (지역 조정 후)", basis: "한 PC에서 5회씩 측정", state: "cond" },
+        { value: "D1–D76", label: "기록한 결정", basis: "개발 계획 문서의 결정 목록", state: "ok" },
+      ],
+      honest:
+        "모든 데이터는 가상이며, 질문 은행이 실제 현장에 맞는지는 현직자 인터뷰 전이라 아직 증명하지 못했습니다. 키보드 전 경로·스크린리더·실기기 확인은 미확인으로 남겨 두었습니다.",
+      stack: ["Next.js 16", "React 19", "TypeScript", "zod", "SQLite", "Supabase", "Vercel", "Claude API", "Claude Code"],
+      live: { label: "서비스 열어 보기", url: "https://sales-service-gamma.vercel.app/" },
     },
     {
       id: "spot",
@@ -468,6 +539,50 @@ window.SITE = {
 
   // 이야기로 읽기 (서술형). 카드의 "이야기로 읽기" 버튼에서 열립니다. id는 featured의 id 또는 others의 storyId.
   stories: {
+    veriorder: {
+      name: "VeriOrder",
+      hook: "AI가 주문 메일을 읽어도,<br><em>등록 버튼은 사람만</em> 누를 수 있게 DB에서 막았습니다.",
+      meta: "LS JUMP-UP 프로젝트 2 · 2026.10 · 3인 팀 · 백엔드 · DB · 배포 담당",
+      numbers: [
+        { v: "57건", l: "머지된 PR (팀 185건 중)" },
+        { v: "1,020개", l: "자동 시험 · 실패 0 (팀)" },
+        { v: "22 / 22", l: "운영 스모크 점검" },
+        { v: "71 / 94", l: "직접 눌러 본 QA 통과" }
+      ],
+      chapters: [
+        { label: "01 · 문제", head: "옮겨 적는 것보다, 놓치는 것이 더 아팠습니다",
+          body: ["주문을 이메일로 받는 B2B 회사의 영업지원 담당자는 거래처마다 양식이 다른 메일을 원문과 일일이 대조합니다. 처음에는 '옮겨 적기'가 문제라고 봤는데, AI가 연기한 페르소나 6명 중 5명이 중복 · 수정 주문을 놓쳐 출고 뒤에 수습한 일을 말했습니다. 그래서 문제의 중심을 '놓침'으로 옮겼습니다.",
+                 "이 인터뷰는 실제 사람이 아니라 가상 페르소나여서, 발표에서도 끝까지 '가설'이라고 적었습니다."],
+          shot: 0 },
+        { label: "02 · 구조", head: "메일 한 통이 요청 카드 한 건, 상태가 바뀔 때마다 기록 한 줄",
+          body: ["메일이 들어오면 원문을 저장하고 요청 카드를 하나 만듭니다. 담당자가 승인하면 주문이 버전으로 등록되고, 상태가 바뀔 때마다 요청 기록이 한 줄씩 쌓입니다. 이 기록은 추가만 되고 수정 · 삭제는 DB가 막습니다. 값이 바뀌면 이전 값을 지우지 않고 '대체됨'으로 남겨, 누가 언제 무엇을 바꿨는지 그대로 남습니다.",
+                 "같은 Message-ID는 DB의 유일 제약으로 한 건만 접수되고, 같은 등록 요청을 다시 보내도 주문은 하나만 생깁니다."],
+          shot: 1 },
+        { label: "03 · 권한", head: "버튼을 숨기는 대신, DB가 거절하게 했습니다",
+          body: ["화면에서 버튼만 숨기면 주소를 직접 쳐서 들어올 수 있습니다. 그래서 RLS와 상태 전이 함수로 DB에서 한 번 더 막았습니다. 일반 계정은 자기 접수 건만 보고, 경영 계정으로 요청 표를 조회하면 0줄이 나옵니다. 관리자도 상태 변화만 보고 메일 본문은 읽지 못하며, 승인과 반려는 담당자만 합니다.",
+                 "마감 날 밤 소유자를 바꾸는 SQL을 실행했더니 DB 트리거가 거부했습니다. 보안 규칙이 의도대로 막은 것이라 우회하지 않았습니다."],
+          shot: 2 },
+        { label: "04 · 외부 데이터", head: "후보 50개 중 4개, 값마다 '언제 받았는지'를 붙였습니다",
+          body: ["Gmail(새 주문 메일), 환율, KAMIS 식자재 도매 시세, 금속 시세를 골라 모두 직접 호출해 확인했습니다. Gmail은 10초 간격 시험에서 첫 확인에 새 메일을 잡았습니다. 키가 필요한 API는 서버만 부르고, 화면은 DB에 저장된 값만 읽습니다.",
+                 "값마다 받은 시각을 붙이고 결과를 '읽음 · 내용 없음 · 못 읽음'으로 나눴습니다. 자료가 없는데 0원으로 보이면 잘못 판단하기 때문입니다. 과거 시세 1,804줄을 채우는 작업은 두 번 중단했다 다시 돌려도 줄이 중복되지 않게 했고, 서버 오류를 흉내 낸 시험에서 낡은 실패 표시가 남는 결함을 찾아 고쳤습니다."],
+          shot: 5 },
+        { label: "05 · 판단", head: "단가가 맞는지, 정답 대신 범위와 근거로",
+          body: ["주문 단가를 최근 3일 도매 시세 평균과 비교해 ±10%를 벗어나면 경고합니다. 예를 들어 가상식당 대파는 합의 단가 2,900원이 권장 범위 2,070~2,530원보다 26% 높아 범위 밖으로 표시됩니다. 계산은 코드가 하고, 단가를 자동으로 바꾸지 않습니다.",
+                 "매입 원가가 없어 마진은 계산하지 않고, 시세가 없는 품목은 '자료가 없습니다'로 보여 줍니다. 처음 제안된 '최적의 단가'는 근거 없이 단정하는 말이라 팀에서 '권장 범위와 근거'로 바꿨습니다."],
+          shot: 4 },
+        { label: "06 · 배포와 운영", head: "올린 뒤에도 확인했고, 막힌 시간도 기록했습니다",
+          body: ["Vercel 무료 요금제의 서버 함수 12개 제한에 걸려 모든 /api 주소를 길잡이 함수 하나로 합쳤습니다. 배포 뒤에는 스모크 점검 스크립트로 로그인 없이 내용이 새지 않는지 운영 주소에서 22개 항목을 확인했습니다.",
+                 "마감 날 밤, 상품 98개를 넣는 SQL이 상품 목록을 읽는 코드의 조건(기준 단가 필수)과 맞지 않아 업로드와 Gmail 추출이 약 17분 막혔습니다. 실패한 메일의 오류 종류만 남기게 해 둔 설계 덕분에 몇 분 안에 원인을 찾았습니다. 다음에는 DB를 바꾸는 SQL도 실제 데이터와 한 번 겨뤄 본 결과를 PR에 적자고 팀에 제안했습니다."],
+          shot: 7 },
+        { label: "07 · 내 역할", head: "코드는 Claude Code와, 콘솔과 운영은 제 손으로",
+          body: ["DB 설계와 권한 규칙, 외부 데이터 수집, 단가 카드, 분석 화면을 맡았고 구현은 Claude Code와 함께 PR 57건으로 올렸습니다. Supabase · Vercel · Google Cloud의 콘솔 설정과 API 키 신청, 배포와 장애 대응은 직접 했고, 팀원의 PR을 가장 많이 머지했습니다.",
+                 "기여도 40%는 PR 수(약 31%)에 이 콘솔 · 운영 작업을 더해 제가 매긴 값입니다. AI 추출 · 챗봇은 이한솔 님, 화면 · IA · 디자인은 송지현 님이 맡았습니다."] },
+        { label: "08 · 한계", head: "이 프로젝트가 아직 말하지 못하는 것",
+          body: ["메일 · 거래처 · 주문은 모두 가상 자료입니다. 실제 Claude 호출로 잰 추출 정확도와 처리 시간이 얼마나 줄었는지는 재지 못했고, 직접 눌러 본 QA는 94개 중 71개가 통과했습니다. 같은 Gmail을 두 계정이 연결하면 새 메일이 한쪽으로만 들어가는 문제는 막는 장치 대신 시연 규칙으로 피했습니다. 다음 단계는 실제 영업지원 담당자에게 써 보게 하는 것입니다."],
+          shot: 8 }
+      ],
+      tech: ["Supabase", "PostgreSQL · RLS", "pg_cron", "Vault", "Python", "Next.js 16", "TypeScript", "Vercel", "Gmail API", "KAMIS · Frankfurter", "Claude Code"]
+    },
     rokets: {
       name: "LS ROKETS",
       hook: "경보가 여러 개 뜨면, 무엇부터 봐야 할까요?<br>숫자 대신 <em>순서</em>를 보여주는 화면을 만들었습니다.",

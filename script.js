@@ -348,7 +348,7 @@
         return `<li class="dl__row${cur ? " is-current" : ""}">
           <span class="dl__name">${esc(r ? r.label : "전체 (모든 프로젝트)")}${cur ? ' <span class="mono dl__now">지금 보는 관점</span>' : ""}</span>
           <a class="dl__file" href="${esc(rolePdf(r, "원페이저"))}" download>원페이저 <span class="mono">1쪽</span></a>
-          <a class="dl__file" href="${esc(rolePdf(r, "포트폴리오"))}" download>포트폴리오 <span class="mono">${r ? "12쪽" : "16쪽"}</span></a>
+          <a class="dl__file" href="${esc(rolePdf(r, "포트폴리오"))}" download>포트폴리오 <span class="mono">${r ? "12쪽" : "18쪽"}</span></a>
           <button type="button" class="dl__file dl__link" data-copy="${esc(roleLink(r))}" title="${esc(roleLink(r))}">링크 복사</button>
         </li>`;
       })

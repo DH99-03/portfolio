@@ -158,7 +158,7 @@
       <p class="lead" style="margin-top:6px;max-width:860px">${esc(V.thesis)}</p>
       <div class="pillars">${V.pillars.map((x, i) => `<div class="pillar"><span class="mono">0${i + 1}</span><b>${esc(x.name)}</b><p>${esc(x.desc)}</p></div>`).join("")}</div>
       <ol class="flow">${V.flow.map((f, i) => `<li><span class="mono">${i + 1}</span><b>${esc(f.step)}</b><span>${esc(f.skill)}</span></li>`).join("")}</ol>
-      <div class="scenes">${S.scenes
+      <div class="scenes">${S.scenes.slice(-5)
         .map(
           (s) => `<div class="scene"><span class="mono">${esc(s.year)}</span><b>${esc(s.where)}</b><dl><dt>모름</dt><dd>${esc(s.unknown)}</dd><dt>배움</dt><dd>${esc(s.learned)}</dd><dt>끝냄</dt><dd class="done">${esc(s.done)}</dd></dl></div>`
         )
