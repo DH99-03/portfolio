@@ -92,7 +92,7 @@
     const items = [{ id: "top", label: "첫 화면" }];
     picks.forEach((p, i) => items.push({ id: "ps-" + p.id, label: p.name.replace(/\s*\(.*\)$/, ""), sub: `0${i + 1}` }));
     if ($("#projects-tail")) items.push({ id: "projects-tail", label: "다른 프로젝트" });
-    items.push({ id: "vibe", label: "일하는 방식" }, { id: "story", label: "성장 과정" }, { id: "awards", label: "수상·자격" }, { id: "contact", label: "연락처" });
+    items.push({ id: "debug", label: "문제 해결" }, { id: "vibe", label: "일하는 방식" }, { id: "story", label: "성장 과정" }, { id: "awards", label: "수상·자격" }, { id: "contact", label: "연락처" });
     tocItems = items.map((x) => ({ ...x, el: document.getElementById(x.id) })).filter((x) => x.el);
     tocList.innerHTML = tocItems
       .map((x) => `<li><a href="#${esc(x.id)}" class="toc__a${x.sub ? " toc__a--proj" : ""}"><i aria-hidden="true"></i><span>${x.sub ? `<em class="mono">${x.sub}</em>` : ""}${esc(x.label)}</span></a></li>`)
@@ -127,10 +127,36 @@
         return `<li>${kind ? `<span class="kind ${kind === "직접 구현" ? "kind--do" : ""}">${esc(kind)}</span>` : ""}${esc(x)}</li>`;
       })
       .join("")}</ul>`;
+  // 직무별 관점: roles[].views에 id별로 적은 값(oneLine · metrics · role 등)으로 덮어쓴다
+  const viewFor = (p, r) => (r && r.views && r.views[p.id] ? { ...p, ...r.views[p.id], roleKind: r.views[p.id].roleKind || null } : p);
+  let viewRole = null;
+
+  // ---------- 문제 해결 기록 ----------
+  const STEP_NAMES = ["무슨 일이", "원인 찾기", "해결", "배운 점"];
+  const debugCard = (d) => `<article class="dbg-card">
+      <p class="dbg-card__tag">${esc(d.project)}</p>
+      <h3 class="dbg-card__title">${esc(d.title)}</h3>
+      <p class="dbg-card__res"><b>${esc(d.result.value)}</b><span>${esc(d.result.label)}</span></p>
+      <p class="dbg-easy">${esc(d.easy)}</p>
+      <ol class="dbg-steps">${d.steps.map((x, k) => `<li><b>${STEP_NAMES[k]}</b>${esc(x)}</li>`).join("")}</ol>
+    </article>`;
+  const renderDebug = (r) => {
+    const D = S.debug || [];
+    const box = $("#debug-list");
+    if (!box || !D.length) { const sec = $("#debug"); if (sec) sec.hidden = true; return; }
+    const first = ((r && r.debugOrder) || ["outage", "slow", "model"]).map((id) => D.find((d) => d.id === id)).filter(Boolean);
+    const rest = D.filter((d) => !first.includes(d));
+    $("#debug-lead").textContent = S.debugLead || "";
+    box.innerHTML = first.map(debugCard).join("");
+    $("#debug-more").innerHTML = rest.map(debugCard).join("");
+    $("#debug-more-n").textContent = rest.length ? `${rest.length}개 더 보기` : "";
+    $("#debug-more-wrap").hidden = !rest.length;
+  };
+
   // 대표 프로젝트: 장면형 (pscenes.js). 직무를 고르면 그 직무의 앞 3개가 장면으로, 나머지는 짧은 목록으로
   const renderFeatured = (order, full) => {
     const byId = (id) => S.featured.find((p) => p.id === id);
-    const picks = full ? S.featured : order.map(byId).filter(Boolean);
+    const picks = (full ? S.featured : order.map(byId).filter(Boolean)).map((p) => viewFor(p, viewRole));
     const rest = full ? [] : S.featured.filter((p) => !order.includes(p.id));
     window.ProjectScenes.render($("#pscenes"), picks, [$("#top"), $("#projects .section__head"), $("#projects-tail"), $("#vibe")], { maxShots: 3 });
     $("#ps-more-wrap").hidden = !rest.length;
@@ -286,7 +312,9 @@
       proofBox.hidden = true;
     }
     rolesBox.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.role === (r ? r.id : "all"))));
+    viewRole = r || null;
     renderFeatured(r ? r.order : allOrder, !r);
+    renderDebug(r);
     currentRole = r;
     const rc = $("#role-copy");
     if (rc) { rc.title = roleLink(r); rc.setAttribute("aria-label", `${r ? r.label : "전체"} 관점 링크 복사: ${roleLink(r)}`); }
@@ -303,11 +331,12 @@
       pickIds
         .map((id) => S.featured.find((p) => p.id === id))
         .filter(Boolean)
+        .map((p) => viewFor(p, r))
         .map(
           (p, i) => `<li><a class="pick" href="#ps-${esc(p.id)}">
             <span class="pick__no mono">0${i + 1}</span>
             <span class="pick__name">${esc(p.name)}</span>
-            <span class="pick__one">${esc(p.oneLine)}</span>
+            <span class="pick__one">${esc(r && r.views && r.views[p.id] ? p.oneLine : p.easy || p.oneLine)}</span>
             <span class="pick__meta mono">${esc(p.metrics[0].value)} ${esc(p.metrics[0].label)}${p.facts && p.facts.share ? ` · 기여 ${esc(p.facts.share)}` : ""}</span>
           </a></li>`
         )
@@ -336,6 +365,7 @@
     setRole(initial, false);
   } else {
     rolesBox.hidden = true;
+    renderDebug(null);
   }
 
   // ---------- PDF 받기 ----------

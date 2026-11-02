@@ -45,6 +45,7 @@
       <a class="nav__brand" href="#top">권동현</a>
       <nav class="nav__links" id="nav-links" aria-label="섹션 이동">
         <a href="#projects">프로젝트</a>
+        <a href="#debug">문제 해결</a>
         <a href="#vibe">일하는 방식</a>
         <a href="#story">성장 과정</a>
         <a href="#awards">수상·자격</a>
@@ -89,7 +90,7 @@
           <h2>대표 프로젝트</h2>
         </div>
         <div>
-          <p class="section__lead">문제와 내 역할, 결과와 그 한계까지 적었습니다. 숫자마다 어떤 기준으로 쟀는지도 붙였습니다.</p>
+          <p class="section__lead">무엇을 만들었는지 한 줄로 먼저, 자세한 역할과 한계는 '빠르게 보기'에 담았습니다.</p>
           <p class="ps-legend" style="margin-top:12px"><span class="ps-st ps-st--ok">확인함</span>실행·검사로 확인한 값 <span class="ps-st ps-st--cond">조건부</span>데이터·가정이 붙는 값</p>
         </div>
       </div>
@@ -104,16 +105,35 @@
       </div>
     </section>
 
+    <!-- DEBUGGING: 막혔던 순간과 푼 방법 (data.js의 debug) -->
+    <section class="section" id="debug">
+      <div class="section__head">
+        <div>
+          <p class="eyebrow mono">02 / Debugging</p>
+          <h2>막혔던 순간,<br />이렇게 풀었습니다</h2>
+        </div>
+        <p class="section__lead" id="debug-lead"></p>
+      </div>
+      <div class="dbg" id="debug-list"></div>
+      <details class="fold dbg-more" id="debug-more-wrap">
+        <summary>다른 문제 해결 기록 <span class="fold__hint" id="debug-more-n"></span></summary>
+        <div class="fold__body"><div class="dbg" id="debug-more"></div></div>
+      </details>
+    </section>
+
     <!-- HOW I BUILD: 문제 정의 방식 → 프로젝트에 적용한 과정 → 설계와 구현 → AI와 일하는 원칙 -->
     <section class="section" id="vibe">
       <div class="section__head">
         <div>
-          <p class="eyebrow mono">02 / How I Build</p>
+          <p class="eyebrow mono">03 / How I Build</p>
           <h2>문제를 정의하고,<br />AI와 함께 만드는 법</h2>
         </div>
         <p class="section__lead" id="vibe-thesis"></p>
       </div>
 
+      <details class="fold pd-fold">
+        <summary>문제 정의 방식과 프로젝트 적용 과정 <span class="fold__hint">6단계 · 사례 4개 펼치기</span></summary>
+        <div class="fold__body">
       <div class="pd-block">
         <div class="pd-kicker"><span class="mono">A</span><h3>문제 정의 방식</h3><p id="pd-lead"></p></div>
         <div id="pd-steps"></div>
@@ -123,6 +143,8 @@
         <div class="pd-kicker"><span class="mono">B</span><h3>프로젝트에 적용한 과정</h3><p>처음 생각과 최종 기획 사이에서 무엇이 바뀌었고, 제가 무엇을 골랐는지 적었습니다.</p></div>
         <div id="pd-cases"></div>
       </div>
+        </div>
+      </details>
 
       <div class="pd-block">
         <div class="pd-kicker"><span class="mono">C</span><h3>설계와 구현</h3><p id="pd-after"></p></div>
@@ -152,7 +174,7 @@
     <section class="section" id="story">
       <div class="section__head">
         <div>
-          <p class="eyebrow mono">03 / Story</p>
+          <p class="eyebrow mono">04 / Story</p>
           <h2>센서에서 AI, 그리고 제조 현장까지</h2>
         </div>
         <p class="section__lead">물리 신호가 데이터가 되고, 데이터가 서비스가 되고, 서비스가 현장의 판단이 되는 흐름을 따라 성장해 왔습니다.</p>
@@ -164,7 +186,7 @@
     <section class="section" id="awards">
       <div class="section__head">
         <div>
-          <p class="eyebrow mono">04 / Record</p>
+          <p class="eyebrow mono">05 / Record</p>
           <h2>수상 · 자격 · 기술</h2>
         </div>
       </div>
@@ -187,7 +209,7 @@
     <!-- CONTACT -->
     <section class="section contact" id="contact">
       <div>
-        <p class="eyebrow mono">05 / Contact</p>
+        <p class="eyebrow mono">06 / Contact</p>
         <h2 class="contact__title">처음인 일도,<br />끝까지 해내겠습니다.</h2>
       </div>
       <div class="contact__links">

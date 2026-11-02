@@ -132,3 +132,9 @@ body, .nav--scrolled, .footer { transition: background-color .9s var(--ease), co
 /* 접힌 요약은 보이지도, 키보드로 닿지도 않게 */
 .ps-peek:not(.is-open) .ps-peek__body > div { visibility: hidden; }
 .ps-peek__inner ul { gap: 8px; }
+
+/* 쉽게 말하면: 비전공자도 바로 읽히는 한 줄 */
+.ps-easy { display: inline-block; margin-right: 8px; padding: 2px 8px; border-radius: 999px; font-size: 11px; letter-spacing: .02em; color: var(--accent); background: var(--accent-soft); vertical-align: 2px; }
+/* 홈에서는 숫자 기준 문구를 감추고, '확인함 · 조건부' 배지에 마우스를 올리면 보이게 (프로젝트 페이지는 그대로) */
+#pscenes .ps-basis { display: none; }
+#pscenes .ps-st[title] { cursor: help; }

@@ -48,7 +48,7 @@
 
   const stateTag = (m) =>
     m.state
-      ? `<span class="ps-st ps-st--${m.state === "ok" ? "ok" : "cond"}">${m.state === "ok" ? "확인함" : "조건부"}</span>${m.basis ? `<span class="ps-basis">${esc(m.basis)}</span>` : ""}`
+      ? `<span class="ps-st ps-st--${m.state === "ok" ? "ok" : "cond"}"${m.basis ? ` title="${esc(m.basis)}"` : ""}>${m.state === "ok" ? "확인함" : "조건부"}</span>${m.basis ? `<span class="ps-basis">${esc(m.basis)}</span>` : ""}`
       : "";
   const metricsHTML = (p) =>
     `<div class="ps-nums">${p.metrics
@@ -88,7 +88,7 @@
         <p class="ps__no mono">PROJECT 0${i + 1}${p.award ? ` · <span>수상</span>` : ""}</p>
         <p class="ps__kicker">${esc(p.kicker)}</p>
         <h3 class="ps__name" id="ps-name-${esc(p.id)}">${esc(p.name)}</h3>
-        <p class="ps__one">${esc(p.oneLine)}</p>
+        <p class="ps__one">${p.easy ? `<span class="ps-easy mono">쉽게 말하면</span>${esc(p.easy)}` : esc(p.oneLine)}</p>
         ${factsHTML(p)}
         ${metricsHTML(p)}
         <div class="ps-steps" aria-hidden="true">${p.shots.slice(0, MAX_SHOTS).map((_, k) => `<i data-k="${k}"></i>`).join("")}<span class="mono">화면 1 / ${Math.min(p.shots.length, MAX_SHOTS)}</span></div>
@@ -99,6 +99,7 @@
           </div>
           <div class="ps-peek__body" id="ps-peek-${esc(p.id)}" role="region" aria-label="${esc(p.name)} 요약"><div><div class="ps-peek__inner">
             ${p.award ? `<p class="ps-award">${esc(p.award)}</p>` : ""}
+            ${p.easy ? `<div><h4>한 줄 정의</h4><p>${esc(p.oneLine)}</p></div>` : ""}
             <div><h4>문제</h4><p>${esc(p.problem)}</p></div>
             <div><h4>내 역할</h4><ul>${p.role.map((r, k) => `<li>${p.roleKind && p.roleKind[k] ? `<span class="ps-kind">${esc(p.roleKind[k])}</span>` : ""}${esc(r)}</li>`).join("")}</ul></div>
             <p class="ps-honest"><b>한계</b>${esc(p.honest)}</p>

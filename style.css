@@ -611,3 +611,36 @@ button.btn.btn--primary { background: var(--text); }
 }
 @media (prefers-reduced-motion: reduce) { .toc__a i, .toc__a span { transition: none; } }
 @media print { .toc { display: none !important; } }
+
+/* ---------- 문제 해결 기록 (debug) ---------- */
+.dbg { display: grid; gap: 20px; }
+.dbg-card { border: 1px solid var(--line); border-radius: 18px; background: var(--surface); padding: 28px 28px 24px; display: grid; grid-template-columns: minmax(0, 1fr) 200px; gap: 8px 32px; }
+.dbg-card__tag { font-family: var(--mono); font-size: 12px; color: var(--faint); grid-column: 1 / -1; }
+.dbg-card__title { font-size: clamp(20px, 2.2vw, 24px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.35; }
+.dbg-card__res { grid-row: span 2; align-self: start; text-align: right; }
+.dbg-card__res b { display: block; font-size: clamp(24px, 2.6vw, 32px); font-weight: 700; color: var(--accent); letter-spacing: -0.02em; line-height: 1.15; }
+.dbg-card__res span { font-size: 12.5px; color: var(--muted); }
+.dbg-easy { margin-top: 6px; padding: 12px 16px; border-radius: 12px; background: var(--accent-soft); color: var(--text); font-size: 15px; line-height: 1.6; }
+.dbg-easy::before { content: "쉽게 말하면"; display: block; font-family: var(--mono); font-size: 11px; color: var(--accent); margin-bottom: 2px; }
+.dbg-steps { grid-column: 1 / -1; list-style: none; margin: 18px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; counter-reset: dbg; }
+.dbg-steps li { position: relative; padding: 14px 16px 4px 0; border-top: 2px solid var(--line); font-size: 14px; line-height: 1.55; color: var(--muted); }
+.dbg-steps li + li { padding-left: 16px; }
+.dbg-steps li b { display: block; font-size: 12.5px; color: var(--text); margin-bottom: 4px; }
+.dbg-steps li b::before { counter-increment: dbg; content: counter(dbg) " "; font-family: var(--mono); color: var(--accent); }
+.dbg-steps li:nth-child(3) { border-top-color: var(--accent); }
+.dbg-steps li:nth-child(3) b { color: var(--accent); }
+.dbg-more { margin-top: 28px; }
+.dbg-more .fold__body { padding-top: 8px; }
+@media (max-width: 860px) {
+  .dbg-card { grid-template-columns: 1fr; padding: 22px 18px 18px; }
+  .dbg-card__res { grid-row: auto; text-align: left; }
+  .dbg-steps { grid-template-columns: 1fr 1fr; row-gap: 12px; }
+  .dbg-steps li + li { padding-left: 0; }
+  .dbg-steps li:nth-child(even) { padding-left: 14px; }
+}
+@media (max-width: 520px) {
+  .dbg-steps { grid-template-columns: 1fr; }
+  .dbg-steps li:nth-child(even) { padding-left: 0; }
+}
+.pd-fold { margin-bottom: 40px; }
+.pd-fold .fold__body .pd-block:first-child { margin-top: 8px; }

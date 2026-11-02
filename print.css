@@ -280,3 +280,26 @@ b { font-weight: 600; }
 .pdp-steps b { font-size: 14px; }
 .pdp-princ p { font-size: 11px; }
 .pdp-princ b { font-size: 12.5px; }
+
+/* 문제 해결 기록 */
+.dbgp { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 14px 18px; margin-top: 14px; flex: 1; min-height: 0; }
+.dbgp-card { border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; gap: 7px; min-height: 0; }
+.dbgp-top { display: flex; gap: 12px; justify-content: space-between; align-items: flex-start; }
+.dbgp-top .mono { display: block; font-size: 9.5px; color: var(--muted); }
+.dbgp-top > div > b { display: block; font-size: 14.5px; letter-spacing: -0.01em; line-height: 1.3; margin-top: 2px; }
+.dbgp-res { text-align: right; flex: none; max-width: 150px; }
+.dbgp-res b { display: block; font-size: 18px; color: var(--accent); line-height: 1.15; }
+.dbgp-res span { font-size: 9.5px; color: var(--muted); }
+.dbgp-easy { background: var(--accent-soft); border-radius: 7px; padding: 6px 10px; font-size: 11px; line-height: 1.5; }
+.dbgp-easy span { display: block; font-family: var(--mono); font-size: 9px; color: var(--accent); }
+.dbgp-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0 10px; }
+.dbgp-steps li { border-top: 1.5px solid var(--line); padding-top: 5px; font-size: 10px; line-height: 1.45; color: var(--muted); }
+.dbgp-steps li b { display: block; font-size: 10px; color: var(--text); }
+.dbgp-steps li.key { border-top-color: var(--accent); }
+.dbgp-steps li.key b { color: var(--accent); }
+
+/* 넘치는 페이지만 자동으로 촘촘하게 (print.js의 fit) */
+.page.tight { font-size: 11px; line-height: 1.5; }
+.page.tight .lead, .page.tight p, .page.tight li { line-height: 1.45; }
+.page.tight li, .page.tight dd, .page.tight p { font-size: 0.95em; }
+.page.tighter li, .page.tighter dd, .page.tighter p { font-size: 0.9em; line-height: 1.4; }

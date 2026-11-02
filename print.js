@@ -8,7 +8,8 @@
   const strip = (s) => String(s || "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
   const byId = (id) => S.featured.find((p) => p.id === id);
   const order = role ? role.order : S.featured.map((p) => p.id);
-  const picks = order.map(byId).filter(Boolean);
+  const viewFor = (p) => (role && role.views && role.views[p.id] ? { ...p, ...role.views[p.id], roleKind: role.views[p.id].roleKind || null } : p);
+  const picks = order.map(byId).filter(Boolean).map(viewFor);
   const projName = (() => { if (doc !== "project") return null; const id = q.get("id"); const f = byId(id); const o = S.others.find((x) => x.storyId === id); return (f && f.name) || (o && o.name) || null; })();
   const roleLabel = projName || (role ? role.label : "전체");
   const docName = { onepager: "원페이저", portfolio: "포트폴리오", project: "프로젝트 상세" }[doc] || "포트폴리오";
@@ -269,6 +270,30 @@
       ["권동현 · " + roleLabel, docName]
     );
   };
+  // 문제 해결 기록: 직무의 debugOrder 3개 + 다음 1개, 2×2
+  const debugPage = () => {
+    const D = S.debug || [];
+    if (!D.length) return;
+    const first = ((role && role.debugOrder) || ["outage", "slow", "model"]).map((id) => D.find((d) => d.id === id)).filter(Boolean);
+    const four = [...first, ...D.filter((d) => !first.includes(d))].slice(0, 4);
+    const N = ["무슨 일이", "원인 찾기", "해결", "배운 점"];
+    page(
+      "",
+      `<p class="eyebrow">문제 해결 기록</p>
+      <h2 class="h-page">막혔던 순간, 이렇게 풀었습니다</h2>
+      <p class="lead" style="margin-top:4px">${esc(S.debugLead || "")}</p>
+      <div class="dbgp">${four
+        .map(
+          (d) => `<article class="dbgp-card">
+          <div class="dbgp-top"><div><span class="mono">${esc(d.project)}</span><b>${esc(d.title)}</b></div><p class="dbgp-res"><b>${esc(d.result.value)}</b><span>${esc(d.result.label)}</span></p></div>
+          <p class="dbgp-easy"><span>쉽게 말하면</span>${esc(d.easy)}</p>
+          <ol class="dbgp-steps">${d.steps.map((x, k) => `<li${k === 2 ? ' class="key"' : ""}><b>${k + 1} ${N[k]}</b>${esc(x)}</li>`).join("")}</ol>
+        </article>`
+        )
+        .join("")}</div>`,
+      ["권동현 · " + roleLabel, docName]
+    );
+  };
   // ---------- 문서 조립 ----------
   if (doc === "onepager") {
     onePager();
@@ -298,9 +323,10 @@
   } else {
     coverPage();
     glancePage();
+    debugPage();
     if (S.process) {
       pdMethodPage();
-      const pc = S.process.cases.find((c) => picks.slice(0, 3).some((p) => p.id === c.id)) || S.process.cases[0];
+      const pc = picks.slice(0, 3).map((p) => S.process.cases.find((c) => c.id === p.id)).find(Boolean) || S.process.cases[0];
       pdCasePage(pc, "권동현 · " + roleLabel);
     }
     picks.forEach((p, i) => {
@@ -320,5 +346,16 @@
     f.innerHTML = `<span>${esc(S.name)} · ${esc(roleLabel)} ${esc(docName)}</span><span class="mono">${k + 1} / ${all.length}</span>`;
     pg.appendChild(f);
   });
+  // 내용이 바닥글을 덮으면 그 페이지만 글자를 한 단계 줄인다 (폰트가 늦게 로드돼도 다시 확인)
+  const fit = () => all.forEach((pg) => {
+    pg.classList.remove("tight", "tighter");
+    const foot = pg.querySelector(".pg-foot");
+    const limit = foot.getBoundingClientRect().top - 6;
+    const over = () => [...pg.children].some((c) => c !== foot && c.getBoundingClientRect().bottom > limit);
+    if (over()) pg.classList.add("tight");
+    if (over()) pg.classList.add("tighter");
+  });
+  fit();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
   document.title = `${S.name} · ${roleLabel} ${docName}`;
 })();
