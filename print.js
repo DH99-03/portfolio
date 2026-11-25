@@ -7,7 +7,7 @@
   const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const strip = (s) => String(s || "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
   const byId = (id) => S.featured.find((p) => p.id === id);
-  const order = role ? role.order : S.featured.map((p) => p.id);
+  const order = role ? role.order : S.mainOrder || S.featured.map((p) => p.id);
   const viewFor = (p) => (role && role.views && role.views[p.id] ? { ...p, ...role.views[p.id], roleKind: role.views[p.id].roleKind || null } : p);
   const picks = order.map(byId).filter(Boolean).map(viewFor);
   const projName = (() => { if (doc !== "project") return null; const id = q.get("id"); const f = byId(id); const o = S.others.find((x) => x.storyId === id); return (f && f.name) || (o && o.name) || null; })();
@@ -173,7 +173,7 @@
     const ACT = `<p class="sub">사람을 묶어 본 경험</p>
           <ul class="list">${S.activities.map((a) => `<li><span class="mono">${esc(a.period.split(" – ")[0])}</span><div><b>${esc(a.title)}</b><p>${esc(a.desc)}</p></div></li>`).join("")}</ul>`;
     const rest = S.featured.filter((p) => !picks.slice(0, 3).includes(p) || !role);
-    const restRows = role ? S.featured.filter((p) => !role.order.includes(p.id)) : [];
+    const restRows = S.featured.filter((p) => !order.includes(p.id));
     page(
       "",
       `<div class="record">
@@ -183,14 +183,13 @@
             ${restRows.map((p) => `<li><span class="mono">${esc(p.facts ? p.facts.period : "")}</span><div><b>${esc(p.name)}</b><p>${esc(p.oneLine)} · ${esc(p.metrics[0].value)} ${esc(p.metrics[0].label)}</p></div></li>`).join("")}
             ${S.others.map((o) => `<li><span class="mono">${esc(o.when.split(" · ")[0])}</span><div><b>${esc(o.name)}</b><p>${esc(o.desc)} · ${esc(o.note)}</p></div></li>`).join("")}
           </ul>
-          ${role ? "" : ACT}
         </div>
         <div>
           <p class="sub">수상</p>
           <ul class="list">${S.awards.map((a) => `<li><span class="mono">${esc(a.date)}</span><div><b>${esc(a.title)}</b><p>${esc(a.org)} · ${esc(a.project)}</p></div></li>`).join("")}</ul>
           <p class="sub">자격 · 어학</p>
           <ul class="certs">${S.certs.map((c) => `<li><b>${esc(c.name)}</b><span class="mono">${esc(c.date)}</span><span>${esc(c.org)}</span></li>`).join("")}</ul>
-          ${role ? ACT : ""}
+          ${ACT}
         </div>
       </div>
       <div class="closing"><h3>처음인 일도,<br>끝까지 해내겠습니다.</h3>${contact()}</div>`,
@@ -274,7 +273,7 @@
   const debugPage = () => {
     const D = S.debug || [];
     if (!D.length) return;
-    const first = ((role && role.debugOrder) || ["outage", "slow", "model"]).map((id) => D.find((d) => d.id === id)).filter(Boolean);
+    const first = ((role && role.debugOrder) || ["chaejeom", "outage", "slow"]).map((id) => D.find((d) => d.id === id)).filter(Boolean);
     const four = [...first, ...D.filter((d) => !first.includes(d))].slice(0, 4);
     const N = ["무슨 일이", "원인 찾기", "해결", "배운 점"];
     page(

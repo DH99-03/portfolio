@@ -144,7 +144,7 @@
     const D = S.debug || [];
     const box = $("#debug-list");
     if (!box || !D.length) { const sec = $("#debug"); if (sec) sec.hidden = true; return; }
-    const first = ((r && r.debugOrder) || ["outage", "slow", "model"]).map((id) => D.find((d) => d.id === id)).filter(Boolean);
+    const first = ((r && r.debugOrder) || ["chaejeom", "outage", "slow"]).map((id) => D.find((d) => d.id === id)).filter(Boolean);
     const rest = D.filter((d) => !first.includes(d));
     $("#debug-lead").textContent = S.debugLead || "";
     box.innerHTML = first.map(debugCard).join("");
@@ -165,7 +165,7 @@
       .join("");
     renderToc(picks);
   };
-  renderFeatured(S.featured.map((p) => p.id), true);
+  renderFeatured(S.mainOrder || S.featured.map((p) => p.id), !S.mainOrder);
 
   // ---------- OTHERS ----------
   $("#others").innerHTML = S.others
@@ -299,7 +299,7 @@
   const proofBox = $("#hero-proof");
   const heroSub = $("#hero-sub");
   const heroIntro = $("#hero-intro");
-  const allOrder = S.featured.map((p) => p.id);
+  const allOrder = S.mainOrder || S.featured.map((p) => p.id);
   let currentRole = null;
   const setRole = (id, first) => {
     const r = (S.roles || []).find((x) => x.id === id);
@@ -313,7 +313,7 @@
     }
     rolesBox.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.role === (r ? r.id : "all"))));
     viewRole = r || null;
-    renderFeatured(r ? r.order : allOrder, !r);
+    renderFeatured(r ? r.order : allOrder, !r && !S.mainOrder);
     renderDebug(r);
     currentRole = r;
     const rc = $("#role-copy");
