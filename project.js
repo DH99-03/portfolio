@@ -72,6 +72,20 @@
       </section>`
     : "";
 
+  // 표지 그림 대신 영상 첫 장면(제목 화면)을 보이려고 #t=0.1로 연다. 바로 아래 '화면' 첫 그림과 겹치지 않게
+  const demo = f && f.demo
+    ? `<section class="pp-sec" id="demo">
+        <h2 class="pp-h2">시연 영상</h2>
+        <figure class="pp-demo">
+          <video controls muted playsinline preload="metadata" aria-describedby="pp-demo-cap">
+            <source src="${esc(f.demo.src)}#t=0.1" type="video/webm" />
+            영상을 재생할 수 없는 브라우저예요. <a href="${esc(f.demo.src)}">영상 파일 받기</a>
+          </video>
+          <figcaption id="pp-demo-cap">${esc(f.demo.caption)}</figcaption>
+        </figure>
+      </section>`
+    : "";
+
   const story = st
     ? `<section class="pp-sec pp-story">
         <p class="eyebrow mono">${esc(st.meta)}</p>
@@ -97,6 +111,7 @@
   main.innerHTML =
     hero +
     pdef +
+    demo +
     gallery +
     story +
     (stack.length ? `<section class="pp-sec"><h2 class="pp-h2">쓴 기술</h2><div class="chips">${stack.map((s) => `<span class="chip">${esc(s)}</span>`).join("")}</div></section>` : "") +

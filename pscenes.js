@@ -119,7 +119,7 @@
         <a class="ps-end" href="project.html?id=${esc(p.id)}" data-palette="${esc(p.palette || "")}">
           <span class="ps-end__label mono">다 보셨나요?</span>
           <span class="ps-end__title">${esc(p.name)} 전체 보기</span>
-          <span class="ps-end__meta">${[`화면 ${p.shots.length}장`, S.stories && S.stories[p.id] ? `이야기 ${S.stories[p.id].chapters.length}장` : "", "문제 · 역할 · 한계", "프로젝트 PDF"].filter(Boolean).map(esc).join(" · ")}</span>
+          <span class="ps-end__meta">${[`화면 ${p.shots.length}장`, p.demo ? "시연 영상" : "", S.stories && S.stories[p.id] ? `이야기 ${S.stories[p.id].chapters.length}장` : "", "문제 · 역할 · 한계", "프로젝트 PDF"].filter(Boolean).map(esc).join(" · ")}</span>
           <span class="ps-end__arrow" aria-hidden="true">→</span>
         </a>
       </div>
