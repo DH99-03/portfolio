@@ -27,7 +27,7 @@ window.SITE = {
         "Spot!: YOLO 인식 + LoRA 미세조정 LLM + RAG를 Docker로 AWS 배포 (팀장)",
         "미팅 전 질문 가이드: Claude API 메모 점검, 근거가 없으면 '미확인'으로 남김",
       ],
-      order: ["mirigabom", "spot", "salesguide"],
+      order: ["mirigabom", "spot", "veriorder"],
       debugOrder: ["chaejeom", "apikey", "slow"],
     },
     {
@@ -39,7 +39,7 @@ window.SITE = {
         "마감 날 17분 장애를 남겨 둔 오류 기록으로 몇 분 만에 원인 특정",
         "미팅 전 질문 가이드: 측정으로 병목을 찾아 응답 0.7초 → 0.4초",
       ],
-      order: ["veriorder", "mirigabom", "salesguide"],
+      order: ["veriorder", "mirigabom", "spot"],
       debugOrder: ["outage", "chaejeom", "slow"],
     },
     {
@@ -63,7 +63,7 @@ window.SITE = {
         "미리가봄: IA 화면 23개 · PRD 요구사항 25개, 팀 바깥 인터뷰로 알림 시점을 다시 확인",
         "매장 RFID 도입 제안과 본사 협의로 재고 오류 90% 이상 감소",
       ],
-      order: ["mirigabom", "salesguide", "veriorder"],
+      order: ["mirigabom", "veriorder", "busan"],
       debugOrder: ["review2", "chaejeom", "slow"],
     },
     {
@@ -75,7 +75,7 @@ window.SITE = {
         "협상: 회의적인 업체와 화상 · 대면 미팅을 이어가 연 200명 이상 학생이 받는 영어교육 30% 할인 협약",
         "기술 이해: 영업 → 기술영업 요청서 웹앱을 기획부터 배포까지 혼자 완성",
       ],
-      order: ["salesguide", "veriorder", "mirigabom"],
+      order: ["veriorder", "mirigabom", "spot"],
       debugOrder: ["review2", "slow", "outage"],
       // 이 직무에서는 프로젝트를 개발 지표 대신 '고객 · 업무' 관점으로 보여 줍니다 (id별로 덮어쓰기)
       views: {
@@ -523,7 +523,8 @@ window.SITE = {
   ],
 
   // 첫 화면에서 장면으로 크게 보여 줄 프로젝트 순서 ('전체' 관점). 여기 없는 featured는 '다른 대표 프로젝트' 목록으로 작게 보입니다.
-  mainOrder: ["mirigabom", "veriorder", "salesguide", "spot", "busan"],
+  // 미팅 전 질문 가이드 · 냥비에스는 사용자 결정(2026-11-25)으로 메인에서 빼고 '다른 대표 프로젝트'에만 둔다
+  mainOrder: ["mirigabom", "veriorder", "spot", "busan"],
 
   featured: [
     {
