@@ -144,7 +144,7 @@
     const D = S.debug || [];
     const box = $("#debug-list");
     if (!box || !D.length) { const sec = $("#debug"); if (sec) sec.hidden = true; return; }
-    const first = ((r && r.debugOrder) || ["chaejeom", "outage", "slow"]).map((id) => D.find((d) => d.id === id)).filter(Boolean);
+    const first = ((r && r.debugOrder) || ["chaejeom", "outage", "model"]).map((id) => D.find((d) => d.id === id)).filter(Boolean);
     const rest = D.filter((d) => !first.includes(d));
     $("#debug-lead").textContent = S.debugLead || "";
     box.innerHTML = first.map(debugCard).join("");

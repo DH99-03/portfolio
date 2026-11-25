@@ -28,7 +28,7 @@ window.SITE = {
         "VeriOrder: AI가 읽은 주문도 담당자가 원문 근거를 보고 승인해야 등록되게 설계",
       ],
       order: ["mirigabom", "spot", "veriorder"],
-      debugOrder: ["chaejeom", "apikey", "slow"],
+      debugOrder: ["chaejeom", "apikey", "model"],
     },
     {
       id: "sw", label: "SW 개발·IT 운영", file: "SW개발_IT운영",
@@ -40,7 +40,7 @@ window.SITE = {
         "미리가봄: PR 59개 모두 합쳐짐, 저장소 전체 시험 606개 통과(팀 포함)",
       ],
       order: ["veriorder", "mirigabom", "spot"],
-      debugOrder: ["outage", "chaejeom", "slow"],
+      debugOrder: ["outage", "chaejeom", "stale"],
     },
     {
       id: "data", label: "데이터 분석", file: "데이터분석",
@@ -64,7 +64,7 @@ window.SITE = {
         "매장 RFID 도입 제안과 본사 협의로 재고 오류 90% 이상 감소",
       ],
       order: ["mirigabom", "veriorder", "busan"],
-      debugOrder: ["review2", "chaejeom", "slow"],
+      debugOrder: ["review2", "chaejeom", "outage"],
     },
     {
       id: "sales", label: "IT 기술영업", file: "IT기술영업",
@@ -73,9 +73,10 @@ window.SITE = {
       proof: [
         "현장 문제 해결: 재고 불일치 추적 → RFID 제안 → 본사 협의 → 재고 오류 90% 이상 감소",
         "협상: 회의적인 업체와 화상 · 대면 미팅을 이어가 연 200명 이상 학생이 받는 영어교육 30% 할인 협약",
-        "기술 이해: AI가 읽은 주문 메일을 담당자가 원문 근거로 승인하는 B2B 영업지원 웹앱(VeriOrder)에서 백엔드 · DB · 배포 담당",
+        "기술 이해: 영업 → 기술영업 요청서 웹앱을 기획부터 배포까지 혼자 완성",
       ],
-      order: ["veriorder", "mirigabom", "spot"],
+      // 기술영업 버전은 사용자 결정(2026-11-25)으로 미팅 전 질문 가이드를 대표 프로젝트에 다시 넣는다
+      order: ["salesguide", "veriorder", "mirigabom"],
       debugOrder: ["review2", "slow", "outage"],
       // 이 직무에서는 프로젝트를 개발 지표 대신 '고객 · 업무' 관점으로 보여 줍니다 (id별로 덮어쓰기)
       views: {
@@ -437,18 +438,6 @@ window.SITE = {
       result: { value: "17분", label: "멈춘 시간 · 원인 특정은 몇 분" },
     },
     {
-      id: "slow", project: "미팅 전 질문 가이드 · 1인",
-      title: "느린 앱, DB를 옮기기 전에 먼저 쟀다",
-      easy: "주방(서버)과 창고(DB)가 멀리 떨어져 재료를 가지러 오가는 시간이 길었어요. 창고를 옮기는 대신 주방을 창고 옆으로 옮겼어요.",
-      steps: [
-        "배포한 웹앱의 서버 응답이 0.7초로 느림",
-        "'DB를 서울로 옮기자'는 첫 생각 대신 측정해 보니, 병목은 서버 함수가 실행되는 지역이었음",
-        "서버 함수 지역을 DB와 같은 곳으로 옮김",
-        "고치기 전에 측정한다. 가장 싼 원인부터",
-      ],
-      result: { value: "0.7 → 0.4초", label: "서버 응답 · 한 PC에서 5회씩 측정" },
-    },
-    {
       id: "model", project: "LS ROKETS · 팀",
       title: "모델이 고장을 놓친다 → '물리'를 알려 줬다",
       easy: "온도와 속도를 따로따로 보는 대신 '기계가 얼마나 힘들게 돌고 있나'처럼 원인에 가까운 값을 만들어 주니 고장을 더 잘 찾았어요.",
@@ -519,6 +508,19 @@ window.SITE = {
         "시험은 자기가 만든 데이터를 지운다",
       ],
       result: { value: "28건", label: "시험이 남기던 데이터" },
+    },
+    // 미팅 전 질문 가이드 사례는 기술영업 버전에서만 앞에 보여 주고, 나머지에서는 '더 보기' 맨 뒤에 둔다
+    {
+      id: "slow", project: "미팅 전 질문 가이드 · 1인",
+      title: "느린 앱, DB를 옮기기 전에 먼저 쟀다",
+      easy: "주방(서버)과 창고(DB)가 멀리 떨어져 재료를 가지러 오가는 시간이 길었어요. 창고를 옮기는 대신 주방을 창고 옆으로 옮겼어요.",
+      steps: [
+        "배포한 웹앱의 서버 응답이 0.7초로 느림",
+        "'DB를 서울로 옮기자'는 첫 생각 대신 측정해 보니, 병목은 서버 함수가 실행되는 지역이었음",
+        "서버 함수 지역을 DB와 같은 곳으로 옮김",
+        "고치기 전에 측정한다. 가장 싼 원인부터",
+      ],
+      result: { value: "0.7 → 0.4초", label: "서버 응답 · 한 PC에서 5회씩 측정" },
     },
   ],
 

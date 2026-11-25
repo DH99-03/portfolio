@@ -273,7 +273,7 @@
   const debugPage = () => {
     const D = S.debug || [];
     if (!D.length) return;
-    const first = ((role && role.debugOrder) || ["chaejeom", "outage", "slow"]).map((id) => D.find((d) => d.id === id)).filter(Boolean);
+    const first = ((role && role.debugOrder) || ["chaejeom", "outage", "model"]).map((id) => D.find((d) => d.id === id)).filter(Boolean);
     const four = [...first, ...D.filter((d) => !first.includes(d))].slice(0, 4);
     const N = ["무슨 일이", "원인 찾기", "해결", "배운 점"];
     page(
