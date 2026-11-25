@@ -10,7 +10,8 @@
   --accent: #1f5c4d;
   --accent-soft: #e4efeb;
   --sans: "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+  /* JetBrains Mono에 한글이 없어, Windows에서 한글이 굴림체로 빠지지 않게 Pretendard를 둘째로 둔다 */
+  --mono: "JetBrains Mono", "Pretendard Variable", Pretendard, ui-monospace, Consolas, monospace;
   color-scheme: light;
 }
 @page { size: A4 landscape; margin: 0; }

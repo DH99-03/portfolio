@@ -14,7 +14,8 @@
   --max: 1120px;
   --gutter: clamp(20px, 5vw, 40px);
   --sans: "Pretendard Variable", Pretendard, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+  /* JetBrains Mono에 한글이 없어, Windows에서 한글이 굴림체로 빠지지 않게 Pretendard를 둘째로 둔다 */
+  --mono: "JetBrains Mono", "Pretendard Variable", Pretendard, ui-monospace, "SFMono-Regular", Consolas, monospace;
   --ease: cubic-bezier(.2, .7, .2, 1);
 }
 /* 시스템이 다크면 다크, 단 사용자가 고른 값(data-theme)이 있으면 그 값이 우선 */
